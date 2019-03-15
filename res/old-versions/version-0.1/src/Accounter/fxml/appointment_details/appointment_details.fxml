@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Accounter.fxml.appointment_details.ApptDetailsWindowController">
+   <children>
+      <Line endX="80.0" layoutX="100.0" layoutY="22.0" startX="-100.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="22.0" />
+      <Label fx:id="rc__appt_date__lbl" layoutX="8.0" layoutY="31.0" text="Date: " AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="30.0" />
+      <Label fx:id="rc__appt_time_starts_lbl" layoutX="7.0" layoutY="55.0" text="Starts:" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="55.0" />
+      <Label fx:id="rc__appt_time_ends__lbl" layoutX="11.0" layoutY="77.0" text="Ends:" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="80.0" />
+      <Label fx:id="rc__appt_with_client__lbl" layoutX="8.0" layoutY="100.0" text="With:" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="105.0" />
+      <Label fx:id="rc__appt_client__lbl" layoutX="118.0" layoutY="100.0" text="Client Label" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="105.0" />
+      <Label fx:id="rc__appt_notes__lbl" layoutX="8.0" layoutY="122.0" text="Notes:" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="128.0" />
+      <TextArea fx:id="rc__appt_notes__ta" layoutX="10.0" layoutY="145.0" prefHeight="50.0" prefWidth="180.0" />
+      <TextField fx:id="rc__appt_name__tf" layoutX="-192.0" layoutY="-122.0" prefHeight="17.0" prefWidth="123.0" stylesheets="@../../css/appointment_details_window/textfield.css" text="Appointment Name" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <HBox fx:id="rc__hb1" layoutX="113.0" layoutY="50.0" prefHeight="27.0" prefWidth="73.0" AnchorPane.rightAnchor="14.0" />
+      <HBox fx:id="rc__hb2" layoutX="113.0" layoutY="75.0" prefHeight="27.0" prefWidth="73.0" AnchorPane.rightAnchor="14.0" />
+      <DatePicker fx:id="rc__date__dp" layoutX="113.0" layoutY="25.0" prefHeight="27.0" prefWidth="73.0" style="-fx-background-color: null;" stylesheets="@../../css/appointment_details_window/textfield.css" />
+   </children>
+</AnchorPane>

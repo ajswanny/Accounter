@@ -1,0 +1,3 @@
+- Directory from Accounter/src/Accounter/java is Accounter. That is, to access, say, the folder
+    'css', one must navigate src/Accounter/css.
+     - THE DEFAULT CWD IS Accounter.
