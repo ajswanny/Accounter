@@ -5,34 +5,34 @@
 
 package accounter;
 
-import accounter.controller.CalendarController;
 import accounter.controller.FXMLController;
+import accounter.java.client.Client;
+import accounter.java.client.Corporation;
+import accounter.java.client.Individual;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class App extends Application {
 
     /* Fields */
-    public enum ApplicationScene {
-        SETTINGS_SCENE
+    public enum ApplicationWindow {
+        APPLICATION_SETTINGS, NEW_INDIVIDUAL_DIALOGUE
     }
 
-    private Stage primaryStage, applicationSettingsStage;
+    private Stage primaryStage, applicationSettingsStage, newIndividualDialogueStage, newCorporationDialogueStage;
 
-    private Scene applicationSettingsScene;
+    private FXMLController calendarController, applicationSettingsController, newIndividualDialogueController;
 
-    // Controllers
-    private FXMLController calendarController, applicationSettingsController;
+    private ArrayList<Client> clients;
 
-    // Application instance
     private static App instance;
 
     /**
@@ -46,6 +46,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         // Load resources
+        loadClientData();
         loadFxmlControllers();
         loadAltStages();
 
@@ -58,14 +59,15 @@ public class App extends Application {
 
     @Override
     public void stop() {
-
         System.out.println("Closing application.");
-
     }
 
     private void loadFxmlControllers() throws IOException {
+
         calendarController = loadFxmlController("fxml/CalendarController.fxml");
         applicationSettingsController = loadFxmlController("fxml/ApplicationSettingsController.fxml");
+        newIndividualDialogueController = loadFxmlController("fxml/NewIndividualDialogueController.fxml");
+
     }
 
     private FXMLController loadFxmlController(String controllerFxmlFilePath) throws IOException {
@@ -82,8 +84,19 @@ public class App extends Application {
         applicationSettingsStage = new Stage(StageStyle.UNIFIED);
         applicationSettingsStage.initModality(Modality.APPLICATION_MODAL);
         applicationSettingsStage.setOnCloseRequest(event -> closeApplicationSettings());
-        applicationSettingsScene = applicationSettingsController.getScene();
-        applicationSettingsStage.setScene(applicationSettingsScene);
+        applicationSettingsStage.setScene(applicationSettingsController.getScene());
+
+        // NewIndividualDialogue
+        newIndividualDialogueStage = new Stage(StageStyle.UNIFIED);
+        newIndividualDialogueStage.initModality(Modality.WINDOW_MODAL);
+        newIndividualDialogueStage.setOnCloseRequest(event -> closeNewIndividualDialogue());
+        newIndividualDialogueStage.setScene(newIndividualDialogueController.getScene());
+
+    }
+
+    private void loadClientData() {
+
+        clients = new ArrayList<>();
 
     }
 
@@ -91,13 +104,17 @@ public class App extends Application {
         Platform.exit();
     }
 
-    public void requestNewSceneToDisplay(ApplicationScene applicationScene) {
+    public void requestDisplayForNewWindow(ApplicationWindow applicationWindow) {
 
-        switch (applicationScene) {
+        switch (applicationWindow) {
 
-            case SETTINGS_SCENE:
+            case APPLICATION_SETTINGS:
                 displayApplicationSettings();
                 break;
+            case NEW_INDIVIDUAL_DIALOGUE:
+                displayNewIndividualDialogue();
+                break;
+
         }
 
     }
@@ -110,6 +127,24 @@ public class App extends Application {
     private void closeApplicationSettings() {
         applicationSettingsStage.close();
         System.out.println("Closing ApplicationSettings Stage.");
+    }
+
+    private void displayNewIndividualDialogue() {
+        newIndividualDialogueStage.show();
+        System.out.println("Opening NewIndividualDialogue Stage.");
+    }
+
+    private void closeNewIndividualDialogue() {
+        newIndividualDialogueStage.close();
+        System.out.println("Closing NewIndividualDialogue Stage.");
+    }
+
+    public void createNewIndividual(String firstName, String lastName) {
+        clients.add(new Individual(firstName, lastName));
+    }
+
+    public void createNewCorporation(String name) {
+        clients.add(new Corporation(name));
     }
 
     /* Getters */
