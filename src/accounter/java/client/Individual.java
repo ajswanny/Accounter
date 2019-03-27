@@ -17,7 +17,7 @@ public class Individual extends Client {
 
         this.firstName = firstName;
         this.lastName = lastName;
-        sid = firstName + "-" + lastName;
+        sid = firstName + " " + lastName;
 
     }
 

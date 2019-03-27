@@ -28,7 +28,14 @@ public class NewIndividualDialogueController extends FXMLController {
 
         initializeCoreResources();
 
-        createNewIndividual.setOnAction(event -> instance.createNewIndividual(firstNameInput.getText(), lastNameInput.getText()));
+        createNewIndividual.setOnAction(event -> createNewIndividual());
+
+    }
+
+    private void createNewIndividual() {
+
+        instance.createNewIndividual(firstNameInput.getText(), lastNameInput.getText());
+        firstNameInput.clear(); lastNameInput.clear();
 
     }
 

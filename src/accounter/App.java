@@ -5,6 +5,7 @@
 
 package accounter;
 
+import accounter.controller.CalendarController;
 import accounter.controller.FXMLController;
 import accounter.java.client.Client;
 import accounter.java.client.Corporation;
@@ -111,6 +112,8 @@ public class App extends Application {
     private void initClientData() {
 
         clients = new ArrayList<>();
+        clients.add(new Individual("apple", "martin"));
+
 
     }
 
@@ -135,6 +138,7 @@ public class App extends Application {
 
     }
 
+    /* ApplicationSettings open & close */
     private void displayApplicationSettings() {
         applicationSettingsStage.show();
         System.out.println("Opening ApplicationSettings Stage.");
@@ -145,6 +149,7 @@ public class App extends Application {
         System.out.println("Closing ApplicationSettings Stage.");
     }
 
+    /* NewIndividualDialogue open & close */
     private void displayNewIndividualDialogue() {
         newIndividualDialogueStage.show();
         System.out.println("Opening NewIndividualDialogue Stage.");
@@ -155,6 +160,7 @@ public class App extends Application {
         System.out.println("Closing NewIndividualDialogue Stage.");
     }
 
+    /* NewCorporationDialogue open & close */
     private void displayNewCorporationDialogue() {
         newCorporationDialogueStage.show();
         System.out.println("Opening NewCorporationDialogue Stage.");
@@ -165,18 +171,35 @@ public class App extends Application {
         System.out.println("Closing NewCorporationDialogue Stage.");
     }
 
+    /* Client Creation */
     public void createNewIndividual(String firstName, String lastName) {
-        clients.add(new Individual(firstName, lastName));
+        Individual c = new Individual(firstName, lastName);
+        clients.add(c);
+        CalendarController.createNewClientButton(c);
+        closeNewIndividualDialogue();
     }
 
     public void createNewCorporation(String name) {
         clients.add(new Corporation(name));
+        closeNewCorporationDialogue();
+    }
+
+    public static void deleteClient(Client client) {
+
+        instance.clients.remove(client);
+
+        CalendarController.removeClientInfoButton(client);
+
     }
 
     /* Getters */
     @Contract(pure = true)
     public static App getInstance() {
         return instance;
+    }
+
+    public ArrayList<Client> getClients() {
+        return clients;
     }
 
     public static void main(String[] args) {

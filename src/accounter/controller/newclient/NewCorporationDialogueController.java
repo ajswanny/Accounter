@@ -26,6 +26,7 @@ public class NewCorporationDialogueController extends FXMLController {
         initializeCoreResources();
 
         createNewCorporation.setOnAction(event -> instance.createNewCorporation(nameInput.getText()));
+        nameInput.clear();
 
     }
 
