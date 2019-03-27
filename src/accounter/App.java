@@ -24,12 +24,16 @@ public class App extends Application {
 
     /* Fields */
     public enum ApplicationWindow {
-        APPLICATION_SETTINGS, NEW_INDIVIDUAL_DIALOGUE
+        APPLICATION_SETTINGS, NEW_INDIVIDUAL_DIALOGUE, NEW_CORPORATION_DIALOGUE
     }
 
     private Stage primaryStage, applicationSettingsStage, newIndividualDialogueStage, newCorporationDialogueStage;
 
-    private FXMLController calendarController, applicationSettingsController, newIndividualDialogueController;
+    private FXMLController
+            calendarController,
+            applicationSettingsController,
+            newIndividualDialogueController,
+            newCorporationDialogueController;
 
     private ArrayList<Client> clients;
 
@@ -46,9 +50,9 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         // Load resources
-        loadClientData();
-        loadFxmlControllers();
-        loadAltStages();
+        initClientData();
+        initFxmlControllers();
+        initAltStages();
 
         // Setup Stage
         primaryStage = new Stage();
@@ -62,11 +66,12 @@ public class App extends Application {
         System.out.println("Closing application.");
     }
 
-    private void loadFxmlControllers() throws IOException {
+    private void initFxmlControllers() throws IOException {
 
         calendarController = loadFxmlController("fxml/CalendarController.fxml");
         applicationSettingsController = loadFxmlController("fxml/ApplicationSettingsController.fxml");
         newIndividualDialogueController = loadFxmlController("fxml/NewIndividualDialogueController.fxml");
+        newCorporationDialogueController = loadFxmlController("fxml/NewCorporationDialogueController.fxml");
 
     }
 
@@ -78,23 +83,32 @@ public class App extends Application {
 
     }
 
-    private void loadAltStages() {
+    private void initAltStages() {
 
         // ApplicationSettings
         applicationSettingsStage = new Stage(StageStyle.UNIFIED);
         applicationSettingsStage.initModality(Modality.APPLICATION_MODAL);
         applicationSettingsStage.setOnCloseRequest(event -> closeApplicationSettings());
         applicationSettingsStage.setScene(applicationSettingsController.getScene());
+        applicationSettingsStage.setResizable(false);
 
         // NewIndividualDialogue
         newIndividualDialogueStage = new Stage(StageStyle.UNIFIED);
-        newIndividualDialogueStage.initModality(Modality.WINDOW_MODAL);
+        newIndividualDialogueStage.initModality(Modality.APPLICATION_MODAL);
         newIndividualDialogueStage.setOnCloseRequest(event -> closeNewIndividualDialogue());
         newIndividualDialogueStage.setScene(newIndividualDialogueController.getScene());
+        newIndividualDialogueStage.setResizable(false);
+
+        // NewCorporationDialogue
+        newCorporationDialogueStage = new Stage(StageStyle.UNIFIED);
+        newCorporationDialogueStage.initModality(Modality.APPLICATION_MODAL);
+        newCorporationDialogueStage.setOnCloseRequest(event -> closeNewCorporationDialogue());
+        newCorporationDialogueStage.setScene(newCorporationDialogueController.getScene());
+        newCorporationDialogueStage.setResizable(false);
 
     }
 
-    private void loadClientData() {
+    private void initClientData() {
 
         clients = new ArrayList<>();
 
@@ -114,7 +128,9 @@ public class App extends Application {
             case NEW_INDIVIDUAL_DIALOGUE:
                 displayNewIndividualDialogue();
                 break;
-
+            case NEW_CORPORATION_DIALOGUE:
+                displayNewCorporationDialogue();
+                break;
         }
 
     }
@@ -137,6 +153,16 @@ public class App extends Application {
     private void closeNewIndividualDialogue() {
         newIndividualDialogueStage.close();
         System.out.println("Closing NewIndividualDialogue Stage.");
+    }
+
+    private void displayNewCorporationDialogue() {
+        newCorporationDialogueStage.show();
+        System.out.println("Opening NewCorporationDialogue Stage.");
+    }
+
+    private void closeNewCorporationDialogue() {
+        newCorporationDialogueStage.close();
+        System.out.println("Closing NewCorporationDialogue Stage.");
     }
 
     public void createNewIndividual(String firstName, String lastName) {

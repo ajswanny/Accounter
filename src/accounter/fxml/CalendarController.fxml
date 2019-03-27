@@ -23,7 +23,7 @@
                   <Menu mnemonicParsing="false" text="Client">
                      <items>
                         <MenuItem fx:id="newIndividual" mnemonicParsing="false" text="New Individual" />
-                        <MenuItem mnemonicParsing="false" text="New Corporation" />
+                        <MenuItem fx:id="newCorporation" mnemonicParsing="false" text="New Corporation" />
                      </items>
                   </Menu>
               </menus>

@@ -18,6 +18,9 @@ public class CalendarController extends FXMLController {
     @FXML
     private MenuItem newIndividual;
 
+    @FXML
+    private MenuItem newCorporation;
+
     public CalendarController() {
         System.out.println("Initialized instance of CalendarController.");
     }
@@ -36,6 +39,7 @@ public class CalendarController extends FXMLController {
         accounterSettings.setOnAction(event -> instance.requestDisplayForNewWindow(App.ApplicationWindow.APPLICATION_SETTINGS));
         accounterQuit.setOnAction(event -> instance.requestApplicationClose());
         newIndividual.setOnAction(event -> instance.requestDisplayForNewWindow(App.ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
+        newCorporation.setOnAction(event -> instance.requestDisplayForNewWindow(App.ApplicationWindow.NEW_CORPORATION_DIALOGUE));
 
     }
 

@@ -17,7 +17,7 @@ public class NewIndividualDialogueController extends FXMLController {
     private TextField lastNameInput;
 
     @FXML
-    private Button createIndividual;
+    private Button createNewIndividual;
 
     public NewIndividualDialogueController() {
         System.out.println("Created instance of NewIndividualDialogueController.");
@@ -28,7 +28,7 @@ public class NewIndividualDialogueController extends FXMLController {
 
         initializeCoreResources();
 
-        createIndividual.setOnAction(event -> instance.createNewIndividual(firstNameInput.getText(), lastNameInput.getText()));
+        createNewIndividual.setOnAction(event -> instance.createNewIndividual(firstNameInput.getText(), lastNameInput.getText()));
 
     }
 

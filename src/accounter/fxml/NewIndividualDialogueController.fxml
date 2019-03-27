@@ -12,6 +12,6 @@
       <Label layoutX="26.0" layoutY="77.0" text="Last name:" />
       <TextField fx:id="firstNameInput" layoutX="107.0" layoutY="33.0" prefHeight="27.0" prefWidth="118.0" />
       <TextField fx:id="lastNameInput" layoutX="107.0" layoutY="72.0" prefHeight="27.0" prefWidth="118.0" />
-      <Button fx:id="createIndividual" layoutX="166.0" layoutY="118.0" mnemonicParsing="false" text="Accept" />
+      <Button fx:id="createNewIndividual" layoutX="166.0" layoutY="118.0" mnemonicParsing="false" text="Accept" />
    </children>
 </AnchorPane>
