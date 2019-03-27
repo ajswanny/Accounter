@@ -18,7 +18,7 @@ public abstract class FXMLController implements Initializable {
 
     protected App instance;
 
-    protected void initializeCoreResources() {
+    protected void initCoreResources() {
         instance = App.getInstance();
         scene = new Scene(root);
     }

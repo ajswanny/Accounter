@@ -3,10 +3,10 @@ package accounter.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ApplicationSettingsController extends FXMLController {
+public class NewAppointmentDialogueController extends FXMLController {
 
-    public ApplicationSettingsController() {
-        System.out.println("Initialized instance of ApplicationSettingsController.");
+    public NewAppointmentDialogueController() {
+        System.out.println("Initialized instance of NewAppointmentDialogueController.");
     }
 
     @Override

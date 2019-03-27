@@ -23,7 +23,7 @@ public class NewCorporationDialogueController extends FXMLController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        initializeCoreResources();
+        initCoreResources();
 
         createNewCorporation.setOnAction(event -> instance.createNewCorporation(nameInput.getText()));
         nameInput.clear();

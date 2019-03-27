@@ -26,7 +26,7 @@ public class NewIndividualDialogueController extends FXMLController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        initializeCoreResources();
+        initCoreResources();
 
         createNewIndividual.setOnAction(event -> createNewIndividual());
 

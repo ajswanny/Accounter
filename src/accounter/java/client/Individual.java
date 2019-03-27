@@ -1,15 +1,10 @@
 package accounter.java.client;
 
-import accounter.java.Appointment;
-
-import java.util.ArrayList;
-
 public class Individual extends Client {
 
     /* Fields */
     private String firstName;
     private String lastName;
-    private ArrayList<Appointment> appointments;
 
 
     /* Constructors */
@@ -21,12 +16,6 @@ public class Individual extends Client {
 
     }
 
-
-    /* Methods */
-    public void createNewAppointment(String name) {
-        appointments.add(new Appointment(name));
-    }
-
     /* Getters */
     public String getFirstName() {
         return firstName;
@@ -34,10 +23,6 @@ public class Individual extends Client {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public ArrayList<Appointment> getAppointments() {
-        return appointments;
     }
 
 }

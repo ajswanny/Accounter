@@ -25,16 +25,21 @@ public class App extends Application {
 
     /* Fields */
     public enum ApplicationWindow {
-        APPLICATION_SETTINGS, NEW_INDIVIDUAL_DIALOGUE, NEW_CORPORATION_DIALOGUE
+        APPLICATION_SETTINGS, NEW_INDIVIDUAL_DIALOGUE, NEW_CORPORATION_DIALOGUE, NEW_APPOINTMENT_DIALOGUE
     }
 
-    private Stage primaryStage, applicationSettingsStage, newIndividualDialogueStage, newCorporationDialogueStage;
+    private Stage applicationSettingsStage;
+    private Stage newIndividualDialogueStage;
+    private Stage newCorporationDialogueStage;
+    private Stage newAppointmentDialogueStage;
 
     private FXMLController
-            calendarController,
-            applicationSettingsController,
-            newIndividualDialogueController,
-            newCorporationDialogueController;
+        calendarController,
+        applicationSettingsController,
+        newIndividualDialogueController,
+        newCorporationDialogueController,
+        newAppointmentDialogueController
+    ;
 
     private ArrayList<Client> clients;
 
@@ -73,6 +78,7 @@ public class App extends Application {
         applicationSettingsController = loadFxmlController("fxml/ApplicationSettingsController.fxml");
         newIndividualDialogueController = loadFxmlController("fxml/NewIndividualDialogueController.fxml");
         newCorporationDialogueController = loadFxmlController("fxml/NewCorporationDialogueController.fxml");
+        newAppointmentDialogueController = loadFxmlController("fxml/NewAppointmentDialogueController.fxml");
 
     }
 
@@ -84,6 +90,7 @@ public class App extends Application {
 
     }
 
+    @SuppressWarnings("Duplicates")
     private void initAltStages() {
 
         // ApplicationSettings
@@ -107,6 +114,12 @@ public class App extends Application {
         newCorporationDialogueStage.setScene(newCorporationDialogueController.getScene());
         newCorporationDialogueStage.setResizable(false);
 
+        // NewAppointmentDialogue
+        newAppointmentDialogueStage = new Stage(StageStyle.UNIFIED);
+        newAppointmentDialogueStage.initModality(Modality.APPLICATION_MODAL);
+        newAppointmentDialogueStage.setOnCloseRequest(event -> closeNewAppointmentDialogue());
+        newAppointmentDialogueStage.setScene(newAppointmentDialogueController.getScene());
+
     }
 
     private void initClientData() {
@@ -117,6 +130,8 @@ public class App extends Application {
 
     }
 
+
+    /* GUI Alternation */
     public void requestApplicationClose() {
         Platform.exit();
     }
@@ -134,6 +149,9 @@ public class App extends Application {
             case NEW_CORPORATION_DIALOGUE:
                 displayNewCorporationDialogue();
                 break;
+            case NEW_APPOINTMENT_DIALOGUE:
+                displayNewAppointmentDialogue();
+                break;
         }
 
     }
@@ -141,34 +159,45 @@ public class App extends Application {
     /* ApplicationSettings open & close */
     private void displayApplicationSettings() {
         applicationSettingsStage.show();
-        System.out.println("Opening ApplicationSettings Stage.");
+        System.out.println("Opened ApplicationSettings Stage.");
     }
 
     private void closeApplicationSettings() {
         applicationSettingsStage.close();
-        System.out.println("Closing ApplicationSettings Stage.");
+        System.out.println("Closed ApplicationSettings Stage.");
     }
 
     /* NewIndividualDialogue open & close */
     private void displayNewIndividualDialogue() {
         newIndividualDialogueStage.show();
-        System.out.println("Opening NewIndividualDialogue Stage.");
+        System.out.println("Opened NewIndividualDialogue Stage.");
     }
 
     private void closeNewIndividualDialogue() {
         newIndividualDialogueStage.close();
-        System.out.println("Closing NewIndividualDialogue Stage.");
+        System.out.println("Closed NewIndividualDialogue Stage.");
     }
 
     /* NewCorporationDialogue open & close */
     private void displayNewCorporationDialogue() {
         newCorporationDialogueStage.show();
-        System.out.println("Opening NewCorporationDialogue Stage.");
+        System.out.println("Opened NewCorporationDialogue Stage.");
     }
 
     private void closeNewCorporationDialogue() {
         newCorporationDialogueStage.close();
-        System.out.println("Closing NewCorporationDialogue Stage.");
+        System.out.println("Closed NewCorporationDialogue Stage.");
+    }
+
+    /* NewAppointmentDialogue open & close */
+    private void displayNewAppointmentDialogue() {
+        newAppointmentDialogueStage.show();
+        System.out.println("Opened NewAppointmentDialogue Stage.");
+    }
+
+    private void closeNewAppointmentDialogue() {
+        newAppointmentDialogueStage.close();
+        System.out.println("Closed NewAppointmentDialogue Stage.");
     }
 
     /* Client Creation */
@@ -184,6 +213,7 @@ public class App extends Application {
         closeNewCorporationDialogue();
     }
 
+    /** Complete deletion of a Client (UI and data) */
     public static void deleteClient(Client client) {
 
         instance.clients.remove(client);

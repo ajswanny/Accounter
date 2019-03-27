@@ -19,9 +19,12 @@ public class ClientInfoButton extends Button {
         respectiveClient = client;
 
         MenuItem deleteClient = new MenuItem("Delete");
-        deleteClient.setOnAction(event -> App.deleteClient(respectiveClient));
+        MenuItem newAppointment = new MenuItem("New Appointment");
 
-        ContextMenu contextMenu = new ContextMenu(deleteClient);
+        deleteClient.setOnAction(event -> App.deleteClient(respectiveClient));
+        newAppointment.setOnAction(event -> App.getInstance().requestDisplayForNewWindow(App.ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
+
+        ContextMenu contextMenu = new ContextMenu(deleteClient, newAppointment);
         this.setContextMenu(contextMenu);
 
     }
