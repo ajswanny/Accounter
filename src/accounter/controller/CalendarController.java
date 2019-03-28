@@ -40,7 +40,7 @@ public class CalendarController extends FXMLController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        initCoreResources();
+        super.initialize(location, resources);
 
         defineMenuItemActions();
 

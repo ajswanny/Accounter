@@ -5,7 +5,6 @@ public class Corporation extends Client {
     /* Fields */
     private String name;
 
-
     /* Constructors */
     public Corporation(String name) {
 
@@ -13,7 +12,6 @@ public class Corporation extends Client {
         sid = name;
 
     }
-
 
     /* Getters */
     public String getName() {

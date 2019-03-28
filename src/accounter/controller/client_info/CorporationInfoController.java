@@ -2,7 +2,7 @@ package accounter.controller.client_info;
 
 import accounter.controller.FXMLController;
 import accounter.java.Appointment;
-import accounter.java.client.Individual;
+import accounter.java.client.Corporation;
 import accounter.java.models.AppointmentInfoLabel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,24 +13,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class IndividualInfoController extends FXMLController {
+public class CorporationInfoController extends FXMLController {
 
     /* Fields */
-    private static IndividualInfoController individualInfoControllerInstance;
+    private static CorporationInfoController corporationInfoControllerInstance;
 
     @FXML
-    public Label firstName;
-
-    @FXML
-    public Label lastName;
+    public Label name;
 
     @FXML
     public VBox appointmentsContainer;
 
     /* Constructors */
-    public IndividualInfoController() {
+    public CorporationInfoController() {
         System.out.println("Initialized instance of ClientInfoController");
-        individualInfoControllerInstance = this;
+        corporationInfoControllerInstance = this;
     }
 
     /* Methods */
@@ -41,7 +38,7 @@ public class IndividualInfoController extends FXMLController {
 
     private void initAppointmentsList(ArrayList<Appointment> appointments) {
         if (appointments == null) {
-            appointmentsContainer.getChildren().add(new Label("\t\tNo appointments"));
+            appointmentsContainer.getChildren().add(new javafx.scene.control.Label("\t\tNo appointments"));
         } else {
             appointmentsContainer.getChildren().clear();
             for (Appointment appointment : appointments) {
@@ -50,10 +47,9 @@ public class IndividualInfoController extends FXMLController {
         }
     }
 
-    public static void setRespectiveClientData(@NotNull Individual respectiveClient) {
-        individualInfoControllerInstance.firstName.setText(respectiveClient.getFirstName());
-        individualInfoControllerInstance.lastName.setText(respectiveClient.getLastName());
-        individualInfoControllerInstance.initAppointmentsList(respectiveClient.getAppointments());
+    public static void setRespectiveClientData(@NotNull Corporation respectiveClient) {
+        corporationInfoControllerInstance.name.setText(respectiveClient.getName());
+        corporationInfoControllerInstance.initAppointmentsList(respectiveClient.getAppointments());
     }
 
 }

@@ -2,8 +2,10 @@ package accounter.java.models;
 
 import accounter.App;
 import accounter.controller.NewAppointmentDialogueController;
+import accounter.controller.client_info.CorporationInfoController;
 import accounter.controller.client_info.IndividualInfoController;
 import accounter.java.client.Client;
+import accounter.java.client.Corporation;
 import accounter.java.client.Individual;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
@@ -34,8 +36,10 @@ public class ClientInfoButton extends Button {
         this.setOnAction(event -> {
             if (client instanceof Individual) {
                 IndividualInfoController.setRespectiveClientData((Individual) client);
-
                 App.getInstance().requestDisplayForNewWindow(App.ApplicationWindow.INDIVIDUAL_INFO);
+            } else {
+                CorporationInfoController.setRespectiveClientData((Corporation) client);
+                App.getInstance().requestDisplayForNewWindow(App.ApplicationWindow.CORPORATION_INFO);
             }
         });
 

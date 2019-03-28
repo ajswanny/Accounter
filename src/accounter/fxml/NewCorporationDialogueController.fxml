@@ -9,6 +9,6 @@
    <children>
       <Label layoutX="21.0" layoutY="33.0" text="Name:" AnchorPane.leftAnchor="21.0" />
       <TextField fx:id="nameInput" layoutX="70.0" layoutY="28.0" prefHeight="27.0" prefWidth="159.0" AnchorPane.rightAnchor="21.0" />
-      <Button fx:id="createNewCorporation" layoutX="170.0" layoutY="81.0" mnemonicParsing="false" text="Button" />
+       <Button fx:id="createNewCorporation" layoutX="170.0" layoutY="81.0" mnemonicParsing="false" text="Accept"/>
    </children>
 </AnchorPane>

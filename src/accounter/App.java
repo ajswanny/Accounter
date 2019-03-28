@@ -18,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class App extends Application {
     /* Fields */
     public enum ApplicationWindow {
         APPLICATION_SETTINGS, NEW_INDIVIDUAL_DIALOGUE, NEW_CORPORATION_DIALOGUE, NEW_APPOINTMENT_DIALOGUE,
-        INDIVIDUAL_INFO
+        INDIVIDUAL_INFO, CORPORATION_INFO
     }
 
     private Stage applicationSettingsStage;
@@ -35,6 +36,7 @@ public class App extends Application {
     private Stage newCorporationDialogueStage;
     private Stage newAppointmentDialogueStage;
     private Stage individualInfoStage;
+    private Stage corporationInfoStage;
 
     private FXMLController
         calendarController,
@@ -86,6 +88,7 @@ public class App extends Application {
         newCorporationDialogueController = loadFxmlController("fxml/NewCorporationDialogueController.fxml");
         newAppointmentDialogueController = loadFxmlController("fxml/NewAppointmentDialogueController.fxml");
         individualInfoController = loadFxmlController("fxml/client_info/IndividualInfoController.fxml");
+        corporationInfoController = loadFxmlController("fxml/client_info/CorporationInfoController.fxml");
 
     }
 
@@ -135,13 +138,30 @@ public class App extends Application {
         individualInfoStage.setOnCloseRequest(event -> closeIndividualInfo());
         individualInfoStage.setScene(individualInfoController.getScene());
 
+        // CorporationInfo
+        corporationInfoStage = initAltStage(StageStyle.UNIFIED, Modality.APPLICATION_MODAL, false, corporationInfoController);
+        corporationInfoStage.setOnCloseRequest(event -> closeCorporationInfo());
+
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private Stage initAltStage(StageStyle stageStyle, Modality modality, boolean resizable, @NotNull FXMLController fxmlController) {
+        {
+            Stage stage = new Stage(stageStyle);
+            stage.initModality(modality);
+            stage.setResizable(resizable);
+            stage.setScene(fxmlController.getScene());
+            return stage;
+        }
+
+
     }
 
     private void initClientData() {
 
         clients = new ArrayList<>();
-        clients.add(new Individual("apple", "martin"));
-
+        clients.add(new Individual("Beck", "Martin"));
+        clients.add(new Corporation("Microsoft"));
 
     }
 
@@ -151,7 +171,7 @@ public class App extends Application {
         Platform.exit();
     }
 
-    public void requestDisplayForNewWindow(ApplicationWindow applicationWindow) {
+    public void requestDisplayForNewWindow(@NotNull ApplicationWindow applicationWindow) {
 
         switch (applicationWindow) {
 
@@ -169,6 +189,9 @@ public class App extends Application {
                 break;
             case INDIVIDUAL_INFO:
                 displayIndividualInfo();
+                break;
+            case CORPORATION_INFO:
+                displayCorporationInfo();
                 break;
 
         }
@@ -230,6 +253,17 @@ public class App extends Application {
         System.out.println("Closed IndividualInfo Stage.");
     }
 
+    /* CorporationInfo open & close */
+    private void displayCorporationInfo() {
+        corporationInfoStage.show();
+        System.out.println("Opened CorporationInfo Stage.");
+    }
+
+    private void closeCorporationInfo() {
+        corporationInfoStage.close();
+        System.out.println("Closed CorporationInfo Stage");
+    }
+
     /* Client Creation */
     public void createNewIndividual(String firstName, String lastName) {
         Individual c = new Individual(firstName, lastName);
@@ -239,7 +273,9 @@ public class App extends Application {
     }
 
     public void createNewCorporation(String name) {
-        clients.add(new Corporation(name));
+        Corporation c = new Corporation(name);
+        clients.add(c);
+        CalendarController.createNewClientButton(c);
         closeNewCorporationDialogue();
     }
 
