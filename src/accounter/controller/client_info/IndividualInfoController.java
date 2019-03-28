@@ -41,7 +41,7 @@ public class IndividualInfoController extends FXMLController {
 
     private void initAppointmentsList(ArrayList<Appointment> appointments) {
         if (appointments == null) {
-            appointmentsContainer.getChildren().add(new Label("\t\tNo appointments"));
+            appointmentsContainer.getChildren().setAll(new Label("\t\tNo appointments"));
         } else {
             appointmentsContainer.getChildren().clear();
             for (Appointment appointment : appointments) {

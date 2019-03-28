@@ -13,10 +13,12 @@ import accounter.java.client.Corporation;
 import accounter.java.client.Individual;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -104,55 +106,34 @@ public class App extends Application {
     private void initAltStages() {
 
         // ApplicationSettings
-        applicationSettingsStage = new Stage(StageStyle.UNIFIED);
-        applicationSettingsStage.initModality(Modality.APPLICATION_MODAL);
-        applicationSettingsStage.setResizable(false);
-        applicationSettingsStage.setOnCloseRequest(event -> closeApplicationSettings());
-        applicationSettingsStage.setScene(applicationSettingsController.getScene());
+        applicationSettingsStage = initAltStage(applicationSettingsController, f->closeApplicationSettings());
 
         // NewIndividualDialogue
-        newIndividualDialogueStage = new Stage(StageStyle.UNIFIED);
-        newIndividualDialogueStage.initModality(Modality.APPLICATION_MODAL);
-        newIndividualDialogueStage.setResizable(false);
-        newIndividualDialogueStage.setOnCloseRequest(event -> closeNewIndividualDialogue());
-        newIndividualDialogueStage.setScene(newIndividualDialogueController.getScene());
+        newIndividualDialogueStage = initAltStage(newIndividualDialogueController, f->closeNewIndividualDialogue());
 
         // NewCorporationDialogue
-        newCorporationDialogueStage = new Stage(StageStyle.UNIFIED);
-        newCorporationDialogueStage.initModality(Modality.APPLICATION_MODAL);
-        newCorporationDialogueStage.setResizable(false);
-        newCorporationDialogueStage.setOnCloseRequest(event -> closeNewCorporationDialogue());
-        newCorporationDialogueStage.setScene(newCorporationDialogueController.getScene());
+        newCorporationDialogueStage = initAltStage(newCorporationDialogueController, f->closeNewCorporationDialogue());
 
         // NewAppointmentDialogue
-        newAppointmentDialogueStage = new Stage(StageStyle.UNIFIED);
-        newAppointmentDialogueStage.initModality(Modality.APPLICATION_MODAL);
-        newAppointmentDialogueStage.setResizable(false);
-        newAppointmentDialogueStage.setOnCloseRequest(event -> closeNewAppointmentDialogue());
-        newAppointmentDialogueStage.setScene(newAppointmentDialogueController.getScene());
+        newAppointmentDialogueStage = initAltStage(newAppointmentDialogueController, f->closeNewAppointmentDialogue());
 
         // IndividualInfo
-        individualInfoStage = new Stage(StageStyle.UNIFIED);
-        individualInfoStage.initModality(Modality.APPLICATION_MODAL);
-        individualInfoStage.setResizable(false);
-        individualInfoStage.setOnCloseRequest(event -> closeIndividualInfo());
-        individualInfoStage.setScene(individualInfoController.getScene());
+        individualInfoStage = initAltStage(individualInfoController, f->closeIndividualInfo());
 
         // CorporationInfo
-        corporationInfoStage = initAltStage(StageStyle.UNIFIED, Modality.APPLICATION_MODAL, false, corporationInfoController);
-        corporationInfoStage.setOnCloseRequest(event -> closeCorporationInfo());
+        corporationInfoStage = initAltStage(corporationInfoController, f->closeCorporationInfo());
 
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private Stage initAltStage(StageStyle stageStyle, Modality modality, boolean resizable, @NotNull FXMLController fxmlController) {
-        {
-            Stage stage = new Stage(stageStyle);
-            stage.initModality(modality);
-            stage.setResizable(resizable);
-            stage.setScene(fxmlController.getScene());
-            return stage;
-        }
+    private Stage initAltStage(@NotNull FXMLController fxmlController, EventHandler<WindowEvent> actionOnCloseRequest) { {
+        Stage stage = new Stage(StageStyle.UNIFIED);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
+        stage.setScene(fxmlController.getScene());
+        stage.setOnCloseRequest(actionOnCloseRequest);
+        return stage;
+    }
+
 
 
     }

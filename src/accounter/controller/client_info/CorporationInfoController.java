@@ -38,7 +38,7 @@ public class CorporationInfoController extends FXMLController {
 
     private void initAppointmentsList(ArrayList<Appointment> appointments) {
         if (appointments == null) {
-            appointmentsContainer.getChildren().add(new javafx.scene.control.Label("\t\tNo appointments"));
+            appointmentsContainer.getChildren().setAll(new Label("\tNo appointments"));
         } else {
             appointmentsContainer.getChildren().clear();
             for (Appointment appointment : appointments) {
