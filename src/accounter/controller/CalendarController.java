@@ -15,6 +15,8 @@ public class CalendarController extends FXMLController {
 
     private ArrayList<ClientInfoButton> clientButtons;
 
+    private static CalendarController calendarControllerInstance;
+
     @FXML
     private MenuItem accounterSettings;
 
@@ -29,8 +31,6 @@ public class CalendarController extends FXMLController {
 
     @FXML
     private VBox clientButtonsContainer;
-
-    private static CalendarController calendarControllerInstance;
 
     public CalendarController() {
         System.out.println("Initialized instance of CalendarController.");

@@ -1,13 +1,16 @@
 package accounter.controller.client_info;
 
 import accounter.controller.FXMLController;
+import accounter.java.Appointment;
 import accounter.java.client.Individual;
+import accounter.java.models.AppointmentInfoLabel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class IndividualInfoController extends FXMLController {
@@ -15,13 +18,16 @@ public class IndividualInfoController extends FXMLController {
     private static IndividualInfoController individualInfoControllerInstance;
 
     @FXML
-    private Label firstName;
+    public Label firstName;
 
     @FXML
-    private Label lastName;
+    public Label lastName;
 
     @FXML
-    private VBox appointmentsContrainer;
+    public Label appointmentsLabel;
+
+    @FXML
+    public VBox appointmentsContainer;
 
     public IndividualInfoController() {
         System.out.println("Initialized instance of ClientInfoController");
@@ -33,9 +39,21 @@ public class IndividualInfoController extends FXMLController {
         initCoreResources();
     }
 
+    private void initAppointmentsList(ArrayList<Appointment> appointments) {
+        if (appointments == null) {
+            appointmentsContainer.getChildren().add(new Label("\t\tNo appointments"));
+        } else {
+            appointmentsContainer.getChildren().clear();
+            for (Appointment appointment : appointments) {
+                appointmentsContainer.getChildren().add(new AppointmentInfoLabel(appointment));
+            }
+        }
+    }
+
     public static void setRespectiveClientData(@NotNull Individual respectiveClient) {
         individualInfoControllerInstance.firstName.setText(respectiveClient.getFirstName());
         individualInfoControllerInstance.lastName.setText(respectiveClient.getLastName());
+        individualInfoControllerInstance.initAppointmentsList(respectiveClient.getAppointments());
     }
 
 }
