@@ -1,3 +1,9 @@
+/*
+ * Created by Alexander Swanson on 3/28/19 7:10 PM.
+ * Email: alexanderjswanson@icloud.com.
+ * Copyright © 2019. All rights reserved.
+ */
+
 package accounter.controller;
 
 import accounter.java.client.Client;

@@ -1,3 +1,9 @@
+/*
+ * Created by Alexander Swanson on 3/28/19 7:09 PM.
+ * Email: alexanderjswanson@icloud.com.
+ * Copyright © 2019. All rights reserved.
+ */
+
 package accounter.controller.new_client;
 
 import accounter.controller.FXMLController;

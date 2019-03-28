@@ -1,7 +1,8 @@
-//  Created by Alexander Swanson on 3/14/19.
-//  Email: alexanderjswanson@icloud.com.
-//  Copyright © 2019. All rights reserved.
-
+/*
+ * Created by Alexander Swanson on 3/28/19 7:09 PM.
+ * Email: alexanderjswanson@icloud.com.
+ * Copyright © 2019. All rights reserved.
+ */
 
 package accounter;
 
@@ -95,14 +96,11 @@ public class App extends Application {
     }
 
     private FXMLController loadFxmlController(String controllerFxmlFilePath) throws IOException {
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controllerFxmlFilePath));
         fxmlLoader.load();
         return fxmlLoader.getController();
-
     }
 
-    @SuppressWarnings("Duplicates")
     private void initAltStages() {
 
         // ApplicationSettings
@@ -125,7 +123,7 @@ public class App extends Application {
 
     }
 
-    private Stage initAltStage(@NotNull FXMLController fxmlController, EventHandler<WindowEvent> actionOnCloseRequest) { {
+    private Stage initAltStage(@NotNull FXMLController fxmlController, EventHandler<WindowEvent> actionOnCloseRequest) {
         Stage stage = new Stage(StageStyle.UNIFIED);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
@@ -134,16 +132,10 @@ public class App extends Application {
         return stage;
     }
 
-
-
-    }
-
     private void initClientData() {
-
         clients = new ArrayList<>();
         clients.add(new Individual("Beck", "Martin"));
         clients.add(new Corporation("Microsoft"));
-
     }
 
 
@@ -153,9 +145,7 @@ public class App extends Application {
     }
 
     public void requestDisplayForNewWindow(@NotNull ApplicationWindow applicationWindow) {
-
         switch (applicationWindow) {
-
             case APPLICATION_SETTINGS:
                 displayApplicationSettings();
                 break;
@@ -174,9 +164,7 @@ public class App extends Application {
             case CORPORATION_INFO:
                 displayCorporationInfo();
                 break;
-
         }
-
     }
 
     /* ApplicationSettings open & close */
@@ -266,7 +254,8 @@ public class App extends Application {
         CalendarController.removeClientInfoButton(client);
     }
 
-    public void createNewAppointment(Client client, Appointment appointment) {
+    @SuppressWarnings("unused")
+    public void createNewAppointment(@NotNull Client client, Appointment appointment) {
         client.defineNewAppointment(appointment);
     }
 
