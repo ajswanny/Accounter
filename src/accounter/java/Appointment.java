@@ -3,7 +3,6 @@ package accounter.java;
 import accounter.java.client.Client;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Appointment implements Serializable {
 
@@ -25,17 +24,17 @@ public class Appointment implements Serializable {
 
     }
 
-    public Appointment(String name, String description, ArrayList<Client> attendees) {
+    public Appointment(String name, String description, Client attendee) {
 
         this(name, description);
-        this.attendees = attendees;
+        this.attendee= attendee;
 
     }
 
 
     /* Methods */
-    public void addAttendee(Client client) {
-        attendees.add(client);
+    public void setAttendee(Client attendee) {
+        this.attendee = attendee;
     }
 
 
@@ -48,18 +47,14 @@ public class Appointment implements Serializable {
         return description;
     }
 
-    public ArrayList<Client> getAttendees() {
-        return attendees;
+    public Client getAttendee() {
+        return attendee;
     }
 
 
     /* Setters */
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setAttendees(ArrayList<Client> attendees) {
-        this.attendees = attendees;
     }
 
 }
