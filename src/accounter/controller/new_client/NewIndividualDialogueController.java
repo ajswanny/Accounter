@@ -1,4 +1,4 @@
-package accounter.controller.newclient;
+package accounter.controller.new_client;
 
 import accounter.controller.FXMLController;
 import javafx.fxml.FXML;

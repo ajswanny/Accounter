@@ -12,15 +12,14 @@ public abstract class Client implements Serializable {
     private ArrayList<Appointment> appointments;
 
     /* Methods */
-    public void createNewAppointment(String name) {
-        appointments.add(new Appointment(name));
+    public void defineNewAppointment(Appointment appointment) {
+        appointments.add(appointment);
     }
 
     @Override
     public String toString() {
         return sid;
     }
-
 
     /* Getters */
     public ArrayList<Appointment> getAppointments() {

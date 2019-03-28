@@ -10,7 +10,7 @@ public class Appointment implements Serializable {
     /* Fields */
     private String name;
     private String description;
-    private ArrayList<Client> attendees;
+    private Client attendee;
 
 
     /* Constructors */

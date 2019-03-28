@@ -7,6 +7,7 @@ package accounter;
 
 import accounter.controller.CalendarController;
 import accounter.controller.FXMLController;
+import accounter.java.Appointment;
 import accounter.java.client.Client;
 import accounter.java.client.Corporation;
 import accounter.java.client.Individual;
@@ -25,21 +26,26 @@ public class App extends Application {
 
     /* Fields */
     public enum ApplicationWindow {
-        APPLICATION_SETTINGS, NEW_INDIVIDUAL_DIALOGUE, NEW_CORPORATION_DIALOGUE, NEW_APPOINTMENT_DIALOGUE
+        APPLICATION_SETTINGS, NEW_INDIVIDUAL_DIALOGUE, NEW_CORPORATION_DIALOGUE, NEW_APPOINTMENT_DIALOGUE,
+        INDIVIDUAL_INFO
     }
 
     private Stage applicationSettingsStage;
     private Stage newIndividualDialogueStage;
     private Stage newCorporationDialogueStage;
     private Stage newAppointmentDialogueStage;
+    private Stage individualInfoStage;
 
     private FXMLController
         calendarController,
         applicationSettingsController,
         newIndividualDialogueController,
         newCorporationDialogueController,
-        newAppointmentDialogueController
+        newAppointmentDialogueController,
+        individualInfoController,
+        corporationInfoController
     ;
+
 
     private ArrayList<Client> clients;
 
@@ -79,6 +85,7 @@ public class App extends Application {
         newIndividualDialogueController = loadFxmlController("fxml/NewIndividualDialogueController.fxml");
         newCorporationDialogueController = loadFxmlController("fxml/NewCorporationDialogueController.fxml");
         newAppointmentDialogueController = loadFxmlController("fxml/NewAppointmentDialogueController.fxml");
+        individualInfoController = loadFxmlController("fxml/client_info/IndividualInfoController.fxml");
 
     }
 
@@ -96,29 +103,37 @@ public class App extends Application {
         // ApplicationSettings
         applicationSettingsStage = new Stage(StageStyle.UNIFIED);
         applicationSettingsStage.initModality(Modality.APPLICATION_MODAL);
+        applicationSettingsStage.setResizable(false);
         applicationSettingsStage.setOnCloseRequest(event -> closeApplicationSettings());
         applicationSettingsStage.setScene(applicationSettingsController.getScene());
-        applicationSettingsStage.setResizable(false);
 
         // NewIndividualDialogue
         newIndividualDialogueStage = new Stage(StageStyle.UNIFIED);
         newIndividualDialogueStage.initModality(Modality.APPLICATION_MODAL);
+        newIndividualDialogueStage.setResizable(false);
         newIndividualDialogueStage.setOnCloseRequest(event -> closeNewIndividualDialogue());
         newIndividualDialogueStage.setScene(newIndividualDialogueController.getScene());
-        newIndividualDialogueStage.setResizable(false);
 
         // NewCorporationDialogue
         newCorporationDialogueStage = new Stage(StageStyle.UNIFIED);
         newCorporationDialogueStage.initModality(Modality.APPLICATION_MODAL);
+        newCorporationDialogueStage.setResizable(false);
         newCorporationDialogueStage.setOnCloseRequest(event -> closeNewCorporationDialogue());
         newCorporationDialogueStage.setScene(newCorporationDialogueController.getScene());
-        newCorporationDialogueStage.setResizable(false);
 
         // NewAppointmentDialogue
         newAppointmentDialogueStage = new Stage(StageStyle.UNIFIED);
         newAppointmentDialogueStage.initModality(Modality.APPLICATION_MODAL);
+        newAppointmentDialogueStage.setResizable(false);
         newAppointmentDialogueStage.setOnCloseRequest(event -> closeNewAppointmentDialogue());
         newAppointmentDialogueStage.setScene(newAppointmentDialogueController.getScene());
+
+        // IndividualInfo
+        individualInfoStage = new Stage(StageStyle.UNIFIED);
+        individualInfoStage.initModality(Modality.APPLICATION_MODAL);
+        individualInfoStage.setResizable(false);
+        individualInfoStage.setOnCloseRequest(event -> closeIndividualInfo());
+        individualInfoStage.setScene(individualInfoController.getScene());
 
     }
 
@@ -152,6 +167,10 @@ public class App extends Application {
             case NEW_APPOINTMENT_DIALOGUE:
                 displayNewAppointmentDialogue();
                 break;
+            case INDIVIDUAL_INFO:
+                displayIndividualInfo();
+                break;
+
         }
 
     }
@@ -159,7 +178,7 @@ public class App extends Application {
     /* ApplicationSettings open & close */
     private void displayApplicationSettings() {
         applicationSettingsStage.show();
-        System.out.println("Opened ApplicationSettings Stage.");
+        System.out.println("Showed ApplicationSettings Stage.");
     }
 
     private void closeApplicationSettings() {
@@ -170,7 +189,7 @@ public class App extends Application {
     /* NewIndividualDialogue open & close */
     private void displayNewIndividualDialogue() {
         newIndividualDialogueStage.show();
-        System.out.println("Opened NewIndividualDialogue Stage.");
+        System.out.println("Showed NewIndividualDialogue Stage.");
     }
 
     private void closeNewIndividualDialogue() {
@@ -181,7 +200,7 @@ public class App extends Application {
     /* NewCorporationDialogue open & close */
     private void displayNewCorporationDialogue() {
         newCorporationDialogueStage.show();
-        System.out.println("Opened NewCorporationDialogue Stage.");
+        System.out.println("Showed NewCorporationDialogue Stage.");
     }
 
     private void closeNewCorporationDialogue() {
@@ -192,12 +211,23 @@ public class App extends Application {
     /* NewAppointmentDialogue open & close */
     private void displayNewAppointmentDialogue() {
         newAppointmentDialogueStage.show();
-        System.out.println("Opened NewAppointmentDialogue Stage.");
+        System.out.println("Showed NewAppointmentDialogue Stage.");
     }
 
     private void closeNewAppointmentDialogue() {
         newAppointmentDialogueStage.close();
         System.out.println("Closed NewAppointmentDialogue Stage.");
+    }
+
+    /* IndividualInfo open & close */
+    private void displayIndividualInfo() {
+        individualInfoStage.show();
+        System.out.println("Showed IndividualInfo Stage.");
+    }
+
+    private void closeIndividualInfo() {
+        individualInfoStage.close();
+        System.out.println("Closed IndividualInfo Stage.");
     }
 
     /* Client Creation */
@@ -215,11 +245,12 @@ public class App extends Application {
 
     /** Complete deletion of a Client (UI and data) */
     public static void deleteClient(Client client) {
-
         instance.clients.remove(client);
-
         CalendarController.removeClientInfoButton(client);
+    }
 
+    public void createNewAppointment(Client client, Appointment appointment) {
+        client.defineNewAppointment(appointment);
     }
 
     /* Getters */
