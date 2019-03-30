@@ -42,7 +42,7 @@ public class NewIndividualDialogueController extends FXMLController {
     private void createNewIndividual() {
 
         instance.createNewIndividual(firstNameInput.getText(), lastNameInput.getText());
-        instance.requestCloseForNewWindow(App.ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE);
+        instance.requestCloseForWindow(App.ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE);
         firstNameInput.clear(); lastNameInput.clear();
 
     }

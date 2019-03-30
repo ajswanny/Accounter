@@ -35,7 +35,7 @@ public class NewCorporationDialogueController extends FXMLController {
 
     public void createNewCorporation() {
         instance.createNewCorporation(nameInput.getText());
-        instance.requestCloseForNewWindow(App.ApplicationWindow.NEW_CORPORATION_DIALOGUE);
+        instance.requestCloseForWindow(App.ApplicationWindow.NEW_CORPORATION_DIALOGUE);
         nameInput.clear();
     }
 

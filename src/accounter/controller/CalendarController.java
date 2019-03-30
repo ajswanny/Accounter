@@ -56,10 +56,10 @@ public class CalendarController extends FXMLController {
 
     private void defineMenuItemActions() {
 
-        accounterSettings.setOnAction(event -> instance.requestDisplayForNewWindow(App.ApplicationWindow.APPLICATION_SETTINGS));
+        accounterSettings.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.APPLICATION_SETTINGS));
         accounterQuit.setOnAction(event -> instance.requestApplicationClose());
-        newIndividual.setOnAction(event -> instance.requestDisplayForNewWindow(App.ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
-        newCorporation.setOnAction(event -> instance.requestDisplayForNewWindow(App.ApplicationWindow.NEW_CORPORATION_DIALOGUE));
+        newIndividual.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
+        newCorporation.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.NEW_CORPORATION_DIALOGUE));
 
     }
 

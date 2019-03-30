@@ -6,20 +6,23 @@
 
 package accounter.controller;
 
+import accounter.App;
 import accounter.java.client.Client;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class NewAppointmentDialogueController extends FXMLController {
 
     private Client respectiveClient;
-
-    private enum TimePeriod { AM, PM }
 
     @FXML
     private TextField nameInput;
@@ -34,7 +37,7 @@ public class NewAppointmentDialogueController extends FXMLController {
     private Spinner<String> minutesSpinner;
 
     @FXML
-    private Spinner<TimePeriod> periodSpinner;
+    private Spinner<App.TimePeriod> periodSpinner;
 
     @FXML
     private Button createNewAppointment;
@@ -45,12 +48,31 @@ public class NewAppointmentDialogueController extends FXMLController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         initCoreResources();
         initSpinners();
-        createNewAppointment.setOnAction(event -> createNewAppointment());
+
+        // Set default Date value
+        dateInput.setValue(LocalDate.now());
+
+        createNewAppointment.setOnAction(event -> {
+            String hoursValue = hoursSpinner.getValue().toString();
+            if (hoursValue.length() == 1) { hoursValue = "0" + hoursValue ; }
+            String time = hoursValue + ":" + minutesSpinner.getValue() + " " + periodSpinner.getValue().toString();
+            instance.createNewAppointment(
+                    respectiveClient,
+                    nameInput.getText(),
+                    dateInput.getValue(),
+                    LocalTime.parse(time, DateTimeFormatter.ofPattern("hh:mm a", Locale.US)),
+                    periodSpinner.getValue()
+            );
+            instance.requestCloseForWindow(App.ApplicationWindow.NEW_APPOINTMENT_DIALOGUE);
+        });
+
     }
 
     private void initSpinners() {
+
         // Hours Spinner
         hoursSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12, 8, 1));
 
@@ -63,18 +85,19 @@ public class NewAppointmentDialogueController extends FXMLController {
                 minuteStrings.add(String.valueOf(i));
             }
         }
-        minutesSpinner.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<>(FXCollections.observableArrayList(minuteStrings)));
+        minutesSpinner.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<>(
+                FXCollections.observableArrayList(minuteStrings)
+        ));
 
         // Period Spinner
-        periodSpinner.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<>(FXCollections.observableArrayList(TimePeriod.AM, TimePeriod.PM)));
+        periodSpinner.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<>(
+                FXCollections.observableArrayList(App.TimePeriod.AM, App.TimePeriod.PM)
+        ));
 
         hoursSpinner.getStyleClass().clear();
         minutesSpinner.getStyleClass().clear();
         periodSpinner.getStyleClass().clear();
-    }
 
-    private void createNewAppointment() {
-        instance.createNewAppointment(respectiveClient, nameInput.getText(), dateInput.getValue());
     }
 
     public void setRespectiveClient(Client respectiveClient) {

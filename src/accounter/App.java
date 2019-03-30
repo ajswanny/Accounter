@@ -26,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class App extends Application {
@@ -39,6 +40,10 @@ public class App extends Application {
     public enum ApplicationWindow {
         APPLICATION_SETTINGS, NEW_INDIVIDUAL_DIALOGUE, NEW_CORPORATION_DIALOGUE, NEW_APPOINTMENT_DIALOGUE,
         INDIVIDUAL_INFO, CORPORATION_INFO
+    }
+
+    public enum TimePeriod {
+        AM, PM
     }
 
     private Stage applicationSettingsStage;
@@ -82,11 +87,17 @@ public class App extends Application {
         primaryStage.setScene(calendarController.getScene());
         primaryStage.show();
 
+        debug();
+
     }
 
     @Override
     public void stop() {
         System.out.println("Closing application.");
+    }
+
+    private void debug() {
+
     }
 
     private void initFxmlControllers() throws IOException {
@@ -110,22 +121,22 @@ public class App extends Application {
     private void initAltStages() {
 
         // ApplicationSettings
-        applicationSettingsStage = initAltStage(applicationSettingsController, f->requestCloseForNewWindow(ApplicationWindow.APPLICATION_SETTINGS));
+        applicationSettingsStage = initAltStage(applicationSettingsController, f-> requestCloseForWindow(ApplicationWindow.APPLICATION_SETTINGS));
 
         // NewIndividualDialogue
-        newIndividualDialogueStage = initAltStage(newIndividualDialogueController, f->requestCloseForNewWindow(ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
+        newIndividualDialogueStage = initAltStage(newIndividualDialogueController, f-> requestCloseForWindow(ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
 
         // NewCorporationDialogue
-        newCorporationDialogueStage = initAltStage(newCorporationDialogueController, f->requestCloseForNewWindow(ApplicationWindow.NEW_CORPORATION_DIALOGUE));
+        newCorporationDialogueStage = initAltStage(newCorporationDialogueController, f-> requestCloseForWindow(ApplicationWindow.NEW_CORPORATION_DIALOGUE));
 
         // NewAppointmentDialogue
-        newAppointmentDialogueStage = initAltStage(newAppointmentDialogueController, f->requestCloseForNewWindow(ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
+        newAppointmentDialogueStage = initAltStage(newAppointmentDialogueController, f-> requestCloseForWindow(ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
 
         // IndividualInfo
-        individualInfoStage = initAltStage(individualInfoController, f->requestCloseForNewWindow(ApplicationWindow.INDIVIDUAL_INFO));
+        individualInfoStage = initAltStage(individualInfoController, f-> requestCloseForWindow(ApplicationWindow.INDIVIDUAL_INFO));
 
         // CorporationInfo
-        corporationInfoStage = initAltStage(corporationInfoController, f->requestCloseForNewWindow(ApplicationWindow.CORPORATION_INFO));
+        corporationInfoStage = initAltStage(corporationInfoController, f-> requestCloseForWindow(ApplicationWindow.CORPORATION_INFO));
 
     }
 
@@ -150,7 +161,7 @@ public class App extends Application {
         Platform.exit();
     }
 
-    public void requestDisplayForNewWindow(@NotNull ApplicationWindow applicationWindow) {
+    public void requestDisplayForWindow(@NotNull ApplicationWindow applicationWindow) {
         switch (applicationWindow) {
             case APPLICATION_SETTINGS:
                 applicationSettingsStage.show();
@@ -180,7 +191,7 @@ public class App extends Application {
         }
     }
 
-    public void requestCloseForNewWindow(@NotNull ApplicationWindow applicationWindow) {
+    public void requestCloseForWindow(@NotNull ApplicationWindow applicationWindow) {
         switch (applicationWindow) {
             case APPLICATION_SETTINGS:
                 applicationSettingsStage.close();
@@ -233,8 +244,8 @@ public class App extends Application {
     }
 
     @SuppressWarnings("unused")
-    public void createNewAppointment(@NotNull Client client, String name, LocalDate date) {
-        client.defineNewAppointment(new Appointment(name, date));
+    public void createNewAppointment(@NotNull Client client, String name, LocalDate date, LocalTime time, TimePeriod timePeriod) {
+        client.defineNewAppointment(new Appointment(name, date, time, timePeriod));
     }
 
     /* Getters */

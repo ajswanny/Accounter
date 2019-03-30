@@ -32,7 +32,7 @@ public class ClientInfoButton extends Button {
         MenuItem newAppointment = new MenuItem("New Appointment");
 
         deleteClient.setOnAction(event -> App.deleteClient(respectiveClient));
-        newAppointment.setOnAction(event -> App.getInstance().requestDisplayForNewWindow(App.ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
+        newAppointment.setOnAction(event -> App.getInstance().requestDisplayForWindow(App.ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
         App.updateNewAppointmentClientFlag(respectiveClient);
 
         ContextMenu contextMenu = new ContextMenu(deleteClient, newAppointment);
@@ -41,10 +41,10 @@ public class ClientInfoButton extends Button {
         this.setOnAction(event -> {
             if (client instanceof Individual) {
                 IndividualInfoController.setRespectiveClientData((Individual) client);
-                App.getInstance().requestDisplayForNewWindow(App.ApplicationWindow.INDIVIDUAL_INFO);
+                App.getInstance().requestDisplayForWindow(App.ApplicationWindow.INDIVIDUAL_INFO);
             } else {
                 CorporationInfoController.setRespectiveClientData((Corporation) client);
-                App.getInstance().requestDisplayForNewWindow(App.ApplicationWindow.CORPORATION_INFO);
+                App.getInstance().requestDisplayForWindow(App.ApplicationWindow.CORPORATION_INFO);
             }
         });
 
