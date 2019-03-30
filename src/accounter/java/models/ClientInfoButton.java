@@ -7,7 +7,6 @@
 package accounter.java.models;
 
 import accounter.App;
-import accounter.controller.NewAppointmentDialogueController;
 import accounter.controller.client_info.CorporationInfoController;
 import accounter.controller.client_info.IndividualInfoController;
 import accounter.java.client.Client;
@@ -34,7 +33,7 @@ public class ClientInfoButton extends Button {
 
         deleteClient.setOnAction(event -> App.deleteClient(respectiveClient));
         newAppointment.setOnAction(event -> App.getInstance().requestDisplayForNewWindow(App.ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
-        NewAppointmentDialogueController.setRespectiveClient(respectiveClient);
+        App.updateNewAppointmentClientFlag(respectiveClient);
 
         ContextMenu contextMenu = new ContextMenu(deleteClient, newAppointment);
         this.setContextMenu(contextMenu);

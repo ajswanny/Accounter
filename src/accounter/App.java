@@ -8,6 +8,7 @@ package accounter;
 
 import accounter.controller.CalendarController;
 import accounter.controller.FXMLController;
+import accounter.controller.NewAppointmentDialogueController;
 import accounter.java.Appointment;
 import accounter.java.client.Client;
 import accounter.java.client.Corporation;
@@ -24,9 +25,15 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class App extends Application {
+
+    /* TODO
+        Time implementation for Appointment
+//        Date implementation for Appointment
+     */
 
     /* Fields */
     public enum ApplicationWindow {
@@ -41,16 +48,15 @@ public class App extends Application {
     private Stage individualInfoStage;
     private Stage corporationInfoStage;
 
-    private FXMLController
-        calendarController,
-        applicationSettingsController,
-        newIndividualDialogueController,
-        newCorporationDialogueController,
-        newAppointmentDialogueController,
-        individualInfoController,
-        corporationInfoController
-    ;
+    private CalendarController calendarController;
+    private FXMLController applicationSettingsController;
+    private FXMLController newIndividualDialogueController;
+    private FXMLController newCorporationDialogueController;
+    private NewAppointmentDialogueController newAppointmentDialogueController;
+    private FXMLController individualInfoController;
+    private FXMLController corporationInfoController;
 
+    private Client newAppointmentClientFlag;
 
     private ArrayList<Client> clients;
 
@@ -85,11 +91,11 @@ public class App extends Application {
 
     private void initFxmlControllers() throws IOException {
 
-        calendarController = loadFxmlController("fxml/CalendarController.fxml");
+        calendarController = (CalendarController) loadFxmlController("fxml/CalendarController.fxml");
         applicationSettingsController = loadFxmlController("fxml/ApplicationSettingsController.fxml");
         newIndividualDialogueController = loadFxmlController("fxml/NewIndividualDialogueController.fxml");
         newCorporationDialogueController = loadFxmlController("fxml/NewCorporationDialogueController.fxml");
-        newAppointmentDialogueController = loadFxmlController("fxml/NewAppointmentDialogueController.fxml");
+        newAppointmentDialogueController = (NewAppointmentDialogueController) loadFxmlController("fxml/NewAppointmentDialogueController.fxml");
         individualInfoController = loadFxmlController("fxml/client_info/IndividualInfoController.fxml");
         corporationInfoController = loadFxmlController("fxml/client_info/CorporationInfoController.fxml");
 
@@ -104,22 +110,22 @@ public class App extends Application {
     private void initAltStages() {
 
         // ApplicationSettings
-        applicationSettingsStage = initAltStage(applicationSettingsController, f->closeApplicationSettings());
+        applicationSettingsStage = initAltStage(applicationSettingsController, f->requestCloseForNewWindow(ApplicationWindow.APPLICATION_SETTINGS));
 
         // NewIndividualDialogue
-        newIndividualDialogueStage = initAltStage(newIndividualDialogueController, f->closeNewIndividualDialogue());
+        newIndividualDialogueStage = initAltStage(newIndividualDialogueController, f->requestCloseForNewWindow(ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
 
         // NewCorporationDialogue
-        newCorporationDialogueStage = initAltStage(newCorporationDialogueController, f->closeNewCorporationDialogue());
+        newCorporationDialogueStage = initAltStage(newCorporationDialogueController, f->requestCloseForNewWindow(ApplicationWindow.NEW_CORPORATION_DIALOGUE));
 
         // NewAppointmentDialogue
-        newAppointmentDialogueStage = initAltStage(newAppointmentDialogueController, f->closeNewAppointmentDialogue());
+        newAppointmentDialogueStage = initAltStage(newAppointmentDialogueController, f->requestCloseForNewWindow(ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
 
         // IndividualInfo
-        individualInfoStage = initAltStage(individualInfoController, f->closeIndividualInfo());
+        individualInfoStage = initAltStage(individualInfoController, f->requestCloseForNewWindow(ApplicationWindow.INDIVIDUAL_INFO));
 
         // CorporationInfo
-        corporationInfoStage = initAltStage(corporationInfoController, f->closeCorporationInfo());
+        corporationInfoStage = initAltStage(corporationInfoController, f->requestCloseForNewWindow(ApplicationWindow.CORPORATION_INFO));
 
     }
 
@@ -147,116 +153,88 @@ public class App extends Application {
     public void requestDisplayForNewWindow(@NotNull ApplicationWindow applicationWindow) {
         switch (applicationWindow) {
             case APPLICATION_SETTINGS:
-                displayApplicationSettings();
+                applicationSettingsStage.show();
+                System.out.println("Showed ApplicationSettings Stage.");
                 break;
             case NEW_INDIVIDUAL_DIALOGUE:
-                displayNewIndividualDialogue();
+                newIndividualDialogueStage.show();
+                System.out.println("Showed NewIndividualDialogue Stage.");
                 break;
             case NEW_CORPORATION_DIALOGUE:
-                displayNewCorporationDialogue();
+                newCorporationDialogueStage.show();
+                System.out.println("Showed NewCorporationDialogue Stage.");
                 break;
             case NEW_APPOINTMENT_DIALOGUE:
-                displayNewAppointmentDialogue();
+                newAppointmentDialogueController.setRespectiveClient(newAppointmentClientFlag);
+                newAppointmentDialogueStage.show();
+                System.out.println("Showed NewAppointmentDialogue Stage.");
                 break;
             case INDIVIDUAL_INFO:
-                displayIndividualInfo();
+                individualInfoStage.show();
+                System.out.println("Showed IndividualInfo Stage.");
                 break;
             case CORPORATION_INFO:
-                displayCorporationInfo();
+                corporationInfoStage.show();
+                System.out.println("Showed CorporationInfo Stage.");
                 break;
         }
     }
 
-    /* ApplicationSettings open & close */
-    private void displayApplicationSettings() {
-        applicationSettingsStage.show();
-        System.out.println("Showed ApplicationSettings Stage.");
+    public void requestCloseForNewWindow(@NotNull ApplicationWindow applicationWindow) {
+        switch (applicationWindow) {
+            case APPLICATION_SETTINGS:
+                applicationSettingsStage.close();
+                System.out.println("Closed ApplicationSettings Stage.");
+                break;
+            case NEW_INDIVIDUAL_DIALOGUE:
+                newIndividualDialogueStage.close();
+                System.out.println("Closed NewIndividualDialogue Stage.");
+                break;
+            case NEW_CORPORATION_DIALOGUE:
+                newCorporationDialogueStage.close();
+                System.out.println("Closed NewCorporationDialogue Stage.");
+                break;
+            case NEW_APPOINTMENT_DIALOGUE:
+                newAppointmentDialogueStage.close();
+                System.out.println("Closed NewAppointmentDialogue Stage.");
+                break;
+            case INDIVIDUAL_INFO:
+                individualInfoStage.close();
+                System.out.println("Closed IndividualInfo Stage.");
+                break;
+            case CORPORATION_INFO:
+                corporationInfoStage.close();
+                System.out.println("Closed CorporationInfo Stage.");
+                break;
+        }
     }
 
-    private void closeApplicationSettings() {
-        applicationSettingsStage.close();
-        System.out.println("Closed ApplicationSettings Stage.");
-    }
-
-    /* NewIndividualDialogue open & close */
-    private void displayNewIndividualDialogue() {
-        newIndividualDialogueStage.show();
-        System.out.println("Showed NewIndividualDialogue Stage.");
-    }
-
-    private void closeNewIndividualDialogue() {
-        newIndividualDialogueStage.close();
-        System.out.println("Closed NewIndividualDialogue Stage.");
-    }
-
-    /* NewCorporationDialogue open & close */
-    private void displayNewCorporationDialogue() {
-        newCorporationDialogueStage.show();
-        System.out.println("Showed NewCorporationDialogue Stage.");
-    }
-
-    private void closeNewCorporationDialogue() {
-        newCorporationDialogueStage.close();
-        System.out.println("Closed NewCorporationDialogue Stage.");
-    }
-
-    /* NewAppointmentDialogue open & close */
-    private void displayNewAppointmentDialogue() {
-        newAppointmentDialogueStage.show();
-        System.out.println("Showed NewAppointmentDialogue Stage.");
-    }
-
-    private void closeNewAppointmentDialogue() {
-        newAppointmentDialogueStage.close();
-        System.out.println("Closed NewAppointmentDialogue Stage.");
-    }
-
-    /* IndividualInfo open & close */
-    private void displayIndividualInfo() {
-        individualInfoStage.show();
-        System.out.println("Showed IndividualInfo Stage.");
-    }
-
-    private void closeIndividualInfo() {
-        individualInfoStage.close();
-        System.out.println("Closed IndividualInfo Stage.");
-    }
-
-    /* CorporationInfo open & close */
-    private void displayCorporationInfo() {
-        corporationInfoStage.show();
-        System.out.println("Opened CorporationInfo Stage.");
-    }
-
-    private void closeCorporationInfo() {
-        corporationInfoStage.close();
-        System.out.println("Closed CorporationInfo Stage");
+    public static void updateNewAppointmentClientFlag(Client client) {
+        instance.newAppointmentClientFlag = client;
     }
 
     /* Client Creation */
     public void createNewIndividual(String firstName, String lastName) {
         Individual c = new Individual(firstName, lastName);
         clients.add(c);
-        CalendarController.createNewClientButton(c);
-        closeNewIndividualDialogue();
+        instance.calendarController.createNewClientButton(c);
     }
 
     public void createNewCorporation(String name) {
         Corporation c = new Corporation(name);
         clients.add(c);
-        CalendarController.createNewClientButton(c);
-        closeNewCorporationDialogue();
+        instance.calendarController.createNewClientButton(c);
     }
 
     /** Complete deletion of a Client (UI and data) */
     public static void deleteClient(Client client) {
         instance.clients.remove(client);
-        CalendarController.removeClientInfoButton(client);
+        instance.calendarController.removeClientInfoButton(client);
     }
 
     @SuppressWarnings("unused")
-    public void createNewAppointment(@NotNull Client client, Appointment appointment) {
-        client.defineNewAppointment(appointment);
+    public void createNewAppointment(@NotNull Client client, String name, LocalDate date) {
+        client.defineNewAppointment(new Appointment(name, date));
     }
 
     /* Getters */

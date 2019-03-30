@@ -6,6 +6,7 @@
 
 package accounter.controller.new_client;
 
+import accounter.App;
 import accounter.controller.FXMLController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,7 +27,7 @@ public class NewIndividualDialogueController extends FXMLController {
     private Button createNewIndividual;
 
     public NewIndividualDialogueController() {
-        System.out.println("Created instance of NewIndividualDialogueController.");
+        System.out.println("Initialized instance of NewIndividualDialogueController.");
     }
 
     @Override
@@ -41,6 +42,7 @@ public class NewIndividualDialogueController extends FXMLController {
     private void createNewIndividual() {
 
         instance.createNewIndividual(firstNameInput.getText(), lastNameInput.getText());
+        instance.requestCloseForNewWindow(App.ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE);
         firstNameInput.clear(); lastNameInput.clear();
 
     }

@@ -76,21 +76,21 @@ public class CalendarController extends FXMLController {
     }
 
     /** Creates a new ClientInfoButton for the GUI */
-    public static void createNewClientButton(Client client) {
+    public void createNewClientButton(Client client) {
 
         ClientInfoButton button = new ClientInfoButton(client);
-        calendarControllerInstance.clientButtons.add(button);
-        calendarControllerInstance.clientButtonsContainer.getChildren().add(button);
+        clientButtons.add(button);
+        clientButtonsContainer.getChildren().add(button);
 
     }
 
     /** Removes a specified ClientInfoButton from the GUI */
-    public static void removeClientInfoButton(Client respectiveClient) {
+    public void removeClientInfoButton(Client respectiveClient) {
 
-        ClientInfoButton button = calendarControllerInstance.clientButtons.stream().filter(clientInfoButton ->
+        ClientInfoButton button = clientButtons.stream().filter(clientInfoButton ->
                 respectiveClient.equals(clientInfoButton.getRespectiveClient())).findFirst().orElse(null);
-        calendarControllerInstance.clientButtons.remove(button);
-        calendarControllerInstance.clientButtonsContainer.getChildren().remove(button);
+        clientButtons.remove(button);
+        clientButtonsContainer.getChildren().remove(button);
 
     }
 

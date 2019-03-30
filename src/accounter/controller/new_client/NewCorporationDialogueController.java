@@ -6,6 +6,7 @@
 
 package accounter.controller.new_client;
 
+import accounter.App;
 import accounter.controller.FXMLController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,13 +24,18 @@ public class NewCorporationDialogueController extends FXMLController {
     public Button createNewCorporation;
 
     public NewCorporationDialogueController() {
-        System.out.println("Created instance of NewCorporationDialogueController.");
+        System.out.println("Initialized instance of NewCorporationDialogueController.");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-        createNewCorporation.setOnAction(event -> instance.createNewCorporation(nameInput.getText()));
+        createNewCorporation.setOnAction(event -> createNewCorporation());
+    }
+
+    public void createNewCorporation() {
+        instance.createNewCorporation(nameInput.getText());
+        instance.requestCloseForNewWindow(App.ApplicationWindow.NEW_CORPORATION_DIALOGUE);
         nameInput.clear();
     }
 

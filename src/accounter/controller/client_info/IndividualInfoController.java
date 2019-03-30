@@ -35,7 +35,7 @@ public class IndividualInfoController extends FXMLController {
 
     /* Constructors */
     public IndividualInfoController() {
-        System.out.println("Initialized instance of ClientInfoController");
+        System.out.println("Initialized instance of ClientInfoController.");
         individualInfoControllerInstance = this;
     }
 

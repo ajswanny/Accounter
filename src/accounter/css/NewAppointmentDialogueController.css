@@ -1,0 +1,15 @@
+/*
+ * Created by Alexander Swanson on 3/30/19 4:06 PM.
+ * Email: alexanderjswanson@icloud.com.
+ * Copyright © 2019. All rights reserved.
+ */
+
+.spinner .increment-arrow-button .increment-arrow {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+
+.spinner .decrement-arrow-button .decrement-arrow {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}

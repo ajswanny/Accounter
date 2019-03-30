@@ -19,7 +19,12 @@ public abstract class Client implements Serializable {
 
     /* Methods */
     public void defineNewAppointment(Appointment appointment) {
-        appointments.add(appointment);
+        try {
+            appointments.add(appointment);
+        } catch (NullPointerException e) {
+            appointments = new ArrayList<>();
+            appointments.add(appointment);
+        }
     }
 
     @Override

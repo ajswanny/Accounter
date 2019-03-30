@@ -32,7 +32,7 @@ public class CorporationInfoController extends FXMLController {
 
     /* Constructors */
     public CorporationInfoController() {
-        System.out.println("Initialized instance of ClientInfoController");
+        System.out.println("Initialized instance of ClientInfoController.");
         corporationInfoControllerInstance = this;
     }
 
