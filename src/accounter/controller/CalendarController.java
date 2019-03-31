@@ -10,7 +10,11 @@ import accounter.App;
 import accounter.java.client.Client;
 import accounter.java.models.ClientInfoButton;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -38,6 +42,21 @@ public class CalendarController extends FXMLController {
     @FXML
     private VBox clientButtonsContainer;
 
+    @FXML
+    private Button previousMonth;
+
+    @FXML
+    private Button nextMonth;
+
+    @FXML
+    private Label currentMonth;
+
+    @FXML
+    private Label currentYear;
+
+    @FXML
+    private Pane calendarGridContainer;
+
     public CalendarController() {
         System.out.println("Initialized instance of CalendarController.");
         calendarControllerInstance = this;
@@ -48,18 +67,14 @@ public class CalendarController extends FXMLController {
 
         super.initialize(location, resources);
 
-        defineMenuItemActions();
-
-        initClientInfoButtons();
-
-    }
-
-    private void defineMenuItemActions() {
-
+        // Define the Menu
         accounterSettings.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.APPLICATION_SETTINGS));
         accounterQuit.setOnAction(event -> instance.requestApplicationClose());
         newIndividual.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
         newCorporation.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.NEW_CORPORATION_DIALOGUE));
+
+        initClientInfoButtons();
+
 
     }
 
@@ -67,7 +82,6 @@ public class CalendarController extends FXMLController {
     private void initClientInfoButtons() {
 
         clientButtons = new ArrayList<>();
-
         for (Client client : instance.getClients()) {
             clientButtons.add(new ClientInfoButton(client));
         }
@@ -92,6 +106,10 @@ public class CalendarController extends FXMLController {
         clientButtons.remove(button);
         clientButtonsContainer.getChildren().remove(button);
 
+    }
+
+    public void setCalendarGridContent(GridPane calendarGrid) {
+        calendarGridContainer.getChildren().setAll(calendarGrid);
     }
 
 }

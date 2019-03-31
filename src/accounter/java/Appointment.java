@@ -46,6 +46,10 @@ public class Appointment implements Serializable {
         return name;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
     /* Setters */
     public void setDate(LocalDate date) {
         this.date = date;

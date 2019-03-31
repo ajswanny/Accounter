@@ -13,10 +13,15 @@ import accounter.java.Appointment;
 import accounter.java.client.Client;
 import accounter.java.client.Corporation;
 import accounter.java.client.Individual;
+import accounter.java.models.AppointmentInfoLabel;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -28,11 +33,13 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class App extends Application {
 
     /* TODO
-        Time implementation for Appointment
+        Calendar
+//        Time implementation for Appointment
 //        Date implementation for Appointment
      */
 
@@ -65,6 +72,10 @@ public class App extends Application {
 
     private ArrayList<Client> clients;
 
+    private ArrayList<Appointment> appointments;
+
+    private HashMap<Integer, GridPane> currentYearCalendarGrids;
+
     private static App instance;
 
     /**
@@ -79,6 +90,7 @@ public class App extends Application {
 
         // Load resources
         initClientData();
+        initMonthCalendarGrids();
         initFxmlControllers();
         initAltStages();
 
@@ -97,7 +109,10 @@ public class App extends Application {
     }
 
     private void debug() {
+        createNewIndividual("Beck", "Martin");
+        createNewCorporation("Microsoft");
 
+        calendarController.setCalendarGridContent(currentYearCalendarGrids.get(2));
     }
 
     private void initFxmlControllers() throws IOException {
@@ -151,10 +166,7 @@ public class App extends Application {
 
     private void initClientData() {
         clients = new ArrayList<>();
-        clients.add(new Individual("Beck", "Martin"));
-        clients.add(new Corporation("Microsoft"));
     }
-
 
     /* GUI Alternation */
     public void requestApplicationClose() {
@@ -243,9 +255,71 @@ public class App extends Application {
         instance.calendarController.removeClientInfoButton(client);
     }
 
-    @SuppressWarnings("unused")
+    /* Calendar Grid Creation */
+    private void initMonthCalendarGrids() {
+
+        currentYearCalendarGrids = new HashMap<>();
+
+        LocalDate localDate = LocalDate.now();
+        LocalDate calendar;
+        GridPane gridPane;
+        AnchorPane anchorPane;
+        Label label;
+        VBox vBox;
+        ArrayList<AppointmentInfoLabel> appointmentInfoLabels;
+        int calDayOfWeekVal;
+
+        for (int m = 1; m < 13; m++) {
+
+            calendar = LocalDate.of(localDate.getYear(), m, 1);
+            gridPane = new GridPane();
+
+            int guiWeekValue = 0;
+            for (int d = 1; d <= calendar.getMonth().maxLength(); d++) {
+
+                // Possible error with LocalDate and February
+                if (m == 2 && d == 29) { break; }
+
+                label = new Label(String.valueOf(d));
+                AnchorPane.setLeftAnchor(label, 5.0); AnchorPane.setTopAnchor(label, 5.0);
+                vBox = new VBox();
+                AnchorPane.setLeftAnchor(vBox, 0.0); AnchorPane.setBottomAnchor(vBox, 0.0); AnchorPane.setRightAnchor(vBox, 0.0);
+                calendar = calendar.withDayOfMonth(d);
+
+                // Define InfoLabels for all Appointments that are scheduled on the date represented by "calendar"
+                if (appointments != null) {
+                    appointmentInfoLabels = new ArrayList<>();
+                    for (Appointment appointment : appointments) {
+                        if (appointment.getDate().equals(calendar)) {
+                            appointmentInfoLabels.add(new AppointmentInfoLabel(appointment));
+                        }
+                    }
+                    vBox.getChildren().addAll(appointmentInfoLabels);
+                }
+
+                // Placement on GridPane
+                calDayOfWeekVal = calendar.getDayOfWeek().getValue();
+                anchorPane = new AnchorPane(label, vBox);
+                if (calDayOfWeekVal == 7) {
+                    gridPane.add(anchorPane, 0, guiWeekValue);
+                } else {
+                    gridPane.add(anchorPane, calDayOfWeekVal, guiWeekValue);
+                }
+                if (calDayOfWeekVal % 6 == 0) {
+                    guiWeekValue++;
+                }
+            }
+
+            currentYearCalendarGrids.put(m, gridPane);
+
+        }
+
+    }
+
     public void createNewAppointment(@NotNull Client client, String name, LocalDate date, LocalTime time, TimePeriod timePeriod) {
-        client.defineNewAppointment(new Appointment(name, date, time, timePeriod));
+        Appointment appointment = new Appointment(name, date, time, timePeriod);
+        client.defineNewAppointment(appointment);
+        appointments.add(appointment);
     }
 
     /* Getters */

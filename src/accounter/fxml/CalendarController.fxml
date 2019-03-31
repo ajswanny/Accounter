@@ -28,6 +28,20 @@
                      <content>
                         <VBox fx:id="clientButtonsContainer" prefHeight="200.0" prefWidth="100.0" />
                      </content></ScrollPane>
+                  <VBox prefHeight="774.0" prefWidth="1014.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox prefHeight="38.0" prefWidth="957.0">
+                           <children>
+                              <Label fx:id="currentMonth" prefHeight="38.0" prefWidth="51.0" text="MONTH" />
+                              <Label fx:id="currentYear" prefHeight="38.0" prefWidth="36.0" text="YEAR" />
+                              <Pane prefHeight="38.0" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="previousMonth" mnemonicParsing="false" prefHeight="38.0" prefWidth="54.0" text="&lt;" />
+                              <Button fx:id="nextMonth" mnemonicParsing="false" prefHeight="38.0" prefWidth="54.0" text="&gt;" />
+                           </children>
+                        </HBox>
+                        <Pane fx:id="calendarGridContainer" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>
