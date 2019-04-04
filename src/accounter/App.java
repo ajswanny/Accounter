@@ -136,22 +136,22 @@ public class App extends Application {
     private void initAltStages() {
 
         // ApplicationSettings
-        applicationSettingsStage = initAltStage(applicationSettingsController, f-> requestCloseForWindow(ApplicationWindow.APPLICATION_SETTINGS));
+        applicationSettingsStage = initAltStage(applicationSettingsController, f->requestCloseForWindow(ApplicationWindow.APPLICATION_SETTINGS));
 
         // NewIndividualDialogue
-        newIndividualDialogueStage = initAltStage(newIndividualDialogueController, f-> requestCloseForWindow(ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
+        newIndividualDialogueStage = initAltStage(newIndividualDialogueController, f->requestCloseForWindow(ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
 
         // NewCorporationDialogue
-        newCorporationDialogueStage = initAltStage(newCorporationDialogueController, f-> requestCloseForWindow(ApplicationWindow.NEW_CORPORATION_DIALOGUE));
+        newCorporationDialogueStage = initAltStage(newCorporationDialogueController, f->requestCloseForWindow(ApplicationWindow.NEW_CORPORATION_DIALOGUE));
 
         // NewAppointmentDialogue
-        newAppointmentDialogueStage = initAltStage(newAppointmentDialogueController, f-> requestCloseForWindow(ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
+        newAppointmentDialogueStage = initAltStage(newAppointmentDialogueController, f->requestCloseForWindow(ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
 
         // IndividualInfo
-        individualInfoStage = initAltStage(individualInfoController, f-> requestCloseForWindow(ApplicationWindow.INDIVIDUAL_INFO));
+        individualInfoStage = initAltStage(individualInfoController, f->requestCloseForWindow(ApplicationWindow.INDIVIDUAL_INFO));
 
         // CorporationInfo
-        corporationInfoStage = initAltStage(corporationInfoController, f-> requestCloseForWindow(ApplicationWindow.CORPORATION_INFO));
+        corporationInfoStage = initAltStage(corporationInfoController, f->requestCloseForWindow(ApplicationWindow.CORPORATION_INFO));
 
     }
 
@@ -259,7 +259,6 @@ public class App extends Application {
     private void initMonthCalendarGrids() {
 
         currentYearCalendarGrids = new HashMap<>();
-
         LocalDate localDate = LocalDate.now();
         LocalDate calendar;
         GridPane gridPane;

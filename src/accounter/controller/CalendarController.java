@@ -13,9 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -55,7 +53,10 @@ public class CalendarController extends FXMLController {
     private Label currentYear;
 
     @FXML
-    private Pane calendarGridContainer;
+    private VBox calendarGridContainer;
+
+    @FXML
+    private GridPane calendarMonthGrid;
 
     public CalendarController() {
         System.out.println("Initialized instance of CalendarController.");
@@ -109,7 +110,7 @@ public class CalendarController extends FXMLController {
     }
 
     public void setCalendarGridContent(GridPane calendarGrid) {
-        calendarGridContainer.getChildren().setAll(calendarGrid);
+        calendarMonthGrid.getChildren().setAll(calendarGrid.getChildren());
     }
 
 }
