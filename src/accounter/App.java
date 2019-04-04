@@ -38,7 +38,10 @@ import java.util.HashMap;
 public class App extends Application {
 
     /* TODO
-        Calendar
+        Calendar tracking of new and deleted Appointments
+        Fix bug when trying to switch to December from GUI
+        Fix bug when pressing month-switching buttons too quickly
+//        Calendar
 //        Time implementation for Appointment
 //        Date implementation for Appointment
      */
@@ -337,12 +340,12 @@ public class App extends Application {
      * Direction: 0 == previous month; 1 == next month.
      */
     public void requestNewMonthToGrid(int direction) {
-        if (direction == 0) {
+        if (direction == 0 && (activeMonthValue - 1 != 0)) {
             activeMonthValue -= 1;
             variableDate = variableDate.withMonth(activeMonthValue);
             calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue));
             calendarController.updateMonthLabelText(variableDate.getMonth().toString());
-        } else {
+        } else if (direction == 1 && (activeMonthValue + 1 != 13)){
             activeMonthValue += 1;
             variableDate = variableDate.withMonth(activeMonthValue);
             calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue + 1));
