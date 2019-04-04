@@ -160,6 +160,7 @@ public class App extends Application {
 
     }
 
+    /** Defines a new custom JavaFX Stage */
     private Stage initAltStage(@NotNull FXMLController fxmlController, EventHandler<WindowEvent> actionOnCloseRequest) {
         Stage stage = new Stage(StageStyle.UNIFIED);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -169,6 +170,7 @@ public class App extends Application {
         return stage;
     }
 
+    /** Initializes all Client data for the User. */
     private void initClientData() {
         clients = new ArrayList<>();
     }
@@ -261,8 +263,10 @@ public class App extends Application {
     }
 
     /* Calendar Grid Creation */
+    /** Initializes the GridPanes to represent Months of the Year for th App's GUI. */
     private void initMonthCalendarGrids() {
 
+        // Prep vars
         currentYearCalendarGrids = new HashMap<>();
         LocalDate localDate = LocalDate.now();
         LocalDate calendar;
@@ -273,11 +277,12 @@ public class App extends Application {
         ArrayList<AppointmentInfoLabel> appointmentInfoLabels;
         int calDayOfWeekVal;
 
+        // Initialize a GridPane for each month of the current year.
         for (int m = 1; m < 13; m++) {
-
             calendar = LocalDate.of(localDate.getYear(), m, 1);
             gridPane = new GridPane();
 
+            // Initialize data for each day of the month m.
             int guiWeekValue = 0;
             for (int d = 1; d <= calendar.getMonth().maxLength(); d++) {
 
@@ -314,12 +319,13 @@ public class App extends Application {
                 }
             }
 
+            // Store the GridPane
             currentYearCalendarGrids.put(m, gridPane);
-
         }
 
     }
 
+    /** Creates a new Appointment, defining its data and updating the GUI. */
     public void createNewAppointment(@NotNull Client client, String name, LocalDate date, LocalTime time, TimePeriod timePeriod) {
         Appointment appointment = new Appointment(name, date, time, timePeriod);
         client.defineNewAppointment(appointment);
