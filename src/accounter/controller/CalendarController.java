@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -74,19 +75,20 @@ public class CalendarController extends FXMLController {
         newIndividual.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
         newCorporation.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.NEW_CORPORATION_DIALOGUE));
 
-        initClientInfoButtons();
-
-
-    }
-
-    /** Initializes all ClientInfoButtons and their necessary resources */
-    private void initClientInfoButtons() {
-
+        // Init ClientInfoButtons
         clientButtons = new ArrayList<>();
         for (Client client : instance.getClients()) {
             clientButtons.add(new ClientInfoButton(client));
         }
         clientButtonsContainer.getChildren().addAll(clientButtons);
+
+        // Init month navigation buttons
+        previousMonth.setOnAction(event -> instance.requestNewMonthToGrid(0));
+        nextMonth.setOnAction(event -> instance.requestNewMonthToGrid(1));
+
+        // Month and Year text
+        currentYear.setText(String.valueOf(instance.variableDate.getYear()));
+        currentMonth.setText(instance.variableDate.getMonth().toString());
 
     }
 
@@ -109,8 +111,19 @@ public class CalendarController extends FXMLController {
 
     }
 
-    public void setCalendarGridContent(GridPane calendarGrid) {
+    /**
+     * Sets the current Calendar-Grid content.
+     * Currently not working properly due to a possible JavaFX bug; setting the content by overriding the children of a
+     * default GridPane.
+     */
+    public void setCalendarGridContent(@NotNull GridPane calendarGrid) {
         calendarMonthGrid.getChildren().setAll(calendarGrid.getChildren());
+
+        // TODO: Implement cleaning of UI.
+    }
+
+    public void updateMonthLabelText(String newMonthName) {
+        currentMonth.setText(newMonthName);
     }
 
 }

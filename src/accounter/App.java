@@ -76,6 +76,10 @@ public class App extends Application {
 
     private HashMap<Integer, GridPane> currentYearCalendarGrids;
 
+    public LocalDate variableDate = LocalDate.now();
+
+    private int activeMonthValue = variableDate.getMonthValue();
+
     private static App instance;
 
     /**
@@ -97,8 +101,11 @@ public class App extends Application {
         // Setup Stage
         primaryStage = new Stage();
         primaryStage.setScene(calendarController.getScene());
-        primaryStage.show();
 
+        // Define current month for the Calendar Grid.
+        calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue));
+
+        primaryStage.show();
         debug();
 
     }
@@ -111,8 +118,6 @@ public class App extends Application {
     private void debug() {
         createNewIndividual("Beck", "Martin");
         createNewCorporation("Microsoft");
-
-        calendarController.setCalendarGridContent(currentYearCalendarGrids.get(2));
     }
 
     private void initFxmlControllers() throws IOException {
@@ -319,6 +324,24 @@ public class App extends Application {
         Appointment appointment = new Appointment(name, date, time, timePeriod);
         client.defineNewAppointment(appointment);
         appointments.add(appointment);
+    }
+
+    /**
+     * Validates and completes a request to change the current Month that is displayed in the Calendar-GridPane
+     * Direction: 0 == previous month; 1 == next month.
+     */
+    public void requestNewMonthToGrid(int direction) {
+        if (direction == 0) {
+            activeMonthValue -= 1;
+            variableDate = variableDate.withMonth(activeMonthValue);
+            calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue));
+            calendarController.updateMonthLabelText(variableDate.getMonth().toString());
+        } else {
+            activeMonthValue += 1;
+            variableDate = variableDate.withMonth(activeMonthValue);
+            calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue + 1));
+            calendarController.updateMonthLabelText(variableDate.getMonth().toString());
+        }
     }
 
     /* Getters */
