@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +19,7 @@ import java.util.ResourceBundle;
 public abstract class FXMLController implements Initializable {
 
     @FXML
-    public AnchorPane root;
+    public Pane root;
 
     Scene scene;
 

@@ -10,6 +10,7 @@ import accounter.App;
 import accounter.java.client.Client;
 import accounter.java.models.ClientInfoButton;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -54,10 +55,7 @@ public class CalendarController extends FXMLController {
     private Label currentYear;
 
     @FXML
-    private VBox calendarGridContainer;
-
-    @FXML
-    private GridPane calendarMonthGrid;
+    private AnchorPane calendarGridContainer;
 
     public CalendarController() {
         System.out.println("Initialized instance of CalendarController.");
@@ -68,6 +66,7 @@ public class CalendarController extends FXMLController {
     public void initialize(URL location, ResourceBundle resources) {
 
         super.initialize(location, resources);
+
 
         // Define the Menu
         accounterSettings.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.APPLICATION_SETTINGS));
@@ -116,8 +115,15 @@ public class CalendarController extends FXMLController {
      * Currently not working properly due to a possible JavaFX bug; setting the content by overriding the children of a
      * default GridPane.
      */
-    public void setCalendarGridContent(@NotNull GridPane calendarGrid) {
-        calendarMonthGrid.getChildren().setAll(calendarGrid.getChildren());
+    public void setCalendarGridContent(GridPane calendarGrid) {
+
+
+        AnchorPane.setTopAnchor(calendarGrid, 0d);
+        AnchorPane.setLeftAnchor(calendarGrid, 0d);
+        AnchorPane.setBottomAnchor(calendarGrid, 0d);
+        AnchorPane.setRightAnchor(calendarGrid, 0d);
+
+        calendarGridContainer.getChildren().setAll(calendarGrid);
 
         // TODO: Implement cleaning of UI.
     }

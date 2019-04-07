@@ -14,6 +14,7 @@ public class AppointmentInfoLabel extends Label {
 
     public AppointmentInfoLabel(@NotNull Appointment appointment) {
         super(appointment.toString());
+
     }
 
 }

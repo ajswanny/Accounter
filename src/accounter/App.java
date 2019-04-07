@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -77,7 +78,7 @@ public class App extends Application {
 
     private ArrayList<Appointment> appointments;
 
-    private HashMap<Integer, GridPane> currentYearCalendarGrids;
+    public HashMap<Integer, GridPane> currentYearCalendarGrids;
 
     public LocalDate variableDate = LocalDate.now();
 
@@ -266,7 +267,7 @@ public class App extends Application {
     }
 
     /* Calendar Grid Creation */
-    /** Initializes the GridPanes to represent Months of the Year for th App's GUI. */
+    /** Initializes the GridPanes to represent Months of the Year for the App's GUI. */
     private void initMonthCalendarGrids() {
 
         // Prep vars
@@ -309,9 +310,12 @@ public class App extends Application {
                     vBox.getChildren().addAll(appointmentInfoLabels);
                 }
 
+                // Define the container of "day-grids." Set this AnchorPane to always grow within the GridPane.
+                anchorPane = new AnchorPane(label, vBox);
+                GridPane.setHgrow(anchorPane, Priority.ALWAYS); GridPane.setVgrow(anchorPane, Priority.ALWAYS);
+
                 // Placement on GridPane
                 calDayOfWeekVal = calendar.getDayOfWeek().getValue();
-                anchorPane = new AnchorPane(label, vBox);
                 if (calDayOfWeekVal == 7) {
                     gridPane.add(anchorPane, 0, guiWeekValue);
                 } else {
@@ -323,6 +327,7 @@ public class App extends Application {
             }
 
             // Store the GridPane
+            gridPane.setGridLinesVisible(true);
             currentYearCalendarGrids.put(m, gridPane);
         }
 
@@ -348,8 +353,10 @@ public class App extends Application {
         } else if (direction == 1 && (activeMonthValue + 1 != 13)){
             activeMonthValue += 1;
             variableDate = variableDate.withMonth(activeMonthValue);
-            calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue + 1));
+            calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue));
             calendarController.updateMonthLabelText(variableDate.getMonth().toString());
+        } else {
+            System.out.println("Encountered illegal request.");
         }
     }
 
