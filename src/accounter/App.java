@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 3/28/19 7:09 PM.
+ * Created by Alexander Swanson on 4/7/19 2:34 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -14,15 +14,13 @@ import accounter.java.client.Client;
 import accounter.java.client.Corporation;
 import accounter.java.client.Individual;
 import accounter.java.models.AppointmentInfoLabel;
+import accounter.java.models.DayGridPaneBase;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -78,13 +76,14 @@ public class App extends Application {
 
     private ArrayList<Appointment> appointments;
 
-    public HashMap<Integer, GridPane> currentYearCalendarGrids;
+    public HashMap<Integer, GridPane> currentYearCalendarMonthGridpanes;
 
     public LocalDate variableDate = LocalDate.now();
 
     private int activeMonthValue = variableDate.getMonthValue();
 
     private static App instance;
+    private boolean verbose;
 
     /**
      * Default constructor.
@@ -95,6 +94,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        verbose = false;
 
         // Load resources
         initClientData();
@@ -107,7 +108,7 @@ public class App extends Application {
         primaryStage.setScene(calendarController.getScene());
 
         // Define current month for the Calendar Grid.
-        calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue));
+        calendarController.setCalendarGridContent(currentYearCalendarMonthGridpanes.get(activeMonthValue));
 
         primaryStage.show();
         debug();
@@ -188,28 +189,28 @@ public class App extends Application {
         switch (applicationWindow) {
             case APPLICATION_SETTINGS:
                 applicationSettingsStage.show();
-                System.out.println("Showed ApplicationSettings Stage.");
+                if (verbose) System.out.println("Showed ApplicationSettings Stage.");
                 break;
             case NEW_INDIVIDUAL_DIALOGUE:
                 newIndividualDialogueStage.show();
-                System.out.println("Showed NewIndividualDialogue Stage.");
+                if (verbose) System.out.println("Showed NewIndividualDialogue Stage.");
                 break;
             case NEW_CORPORATION_DIALOGUE:
                 newCorporationDialogueStage.show();
-                System.out.println("Showed NewCorporationDialogue Stage.");
+                if (verbose) System.out.println("Showed NewCorporationDialogue Stage.");
                 break;
             case NEW_APPOINTMENT_DIALOGUE:
                 newAppointmentDialogueController.setRespectiveClient(newAppointmentClientFlag);
                 newAppointmentDialogueStage.show();
-                System.out.println("Showed NewAppointmentDialogue Stage.");
+                if (verbose) System.out.println("Showed NewAppointmentDialogue Stage.");
                 break;
             case INDIVIDUAL_INFO:
                 individualInfoStage.show();
-                System.out.println("Showed IndividualInfo Stage.");
+                if (verbose) System.out.println("Showed IndividualInfo Stage.");
                 break;
             case CORPORATION_INFO:
                 corporationInfoStage.show();
-                System.out.println("Showed CorporationInfo Stage.");
+                if (verbose) System.out.println("Showed CorporationInfo Stage.");
                 break;
         }
     }
@@ -218,27 +219,27 @@ public class App extends Application {
         switch (applicationWindow) {
             case APPLICATION_SETTINGS:
                 applicationSettingsStage.close();
-                System.out.println("Closed ApplicationSettings Stage.");
+                if (verbose) System.out.println("Closed ApplicationSettings Stage.");
                 break;
             case NEW_INDIVIDUAL_DIALOGUE:
                 newIndividualDialogueStage.close();
-                System.out.println("Closed NewIndividualDialogue Stage.");
+                if (verbose) System.out.println("Closed NewIndividualDialogue Stage.");
                 break;
             case NEW_CORPORATION_DIALOGUE:
                 newCorporationDialogueStage.close();
-                System.out.println("Closed NewCorporationDialogue Stage.");
+                if (verbose) System.out.println("Closed NewCorporationDialogue Stage.");
                 break;
             case NEW_APPOINTMENT_DIALOGUE:
                 newAppointmentDialogueStage.close();
-                System.out.println("Closed NewAppointmentDialogue Stage.");
+                if (verbose) System.out.println("Closed NewAppointmentDialogue Stage.");
                 break;
             case INDIVIDUAL_INFO:
                 individualInfoStage.close();
-                System.out.println("Closed IndividualInfo Stage.");
+                if (verbose) System.out.println("Closed IndividualInfo Stage.");
                 break;
             case CORPORATION_INFO:
                 corporationInfoStage.close();
-                System.out.println("Closed CorporationInfo Stage.");
+                if (verbose) System.out.println("Closed CorporationInfo Stage.");
                 break;
         }
     }
@@ -271,13 +272,11 @@ public class App extends Application {
     private void initMonthCalendarGrids() {
 
         // Prep vars
-        currentYearCalendarGrids = new HashMap<>();
+        currentYearCalendarMonthGridpanes = new HashMap<>();
         LocalDate localDate = LocalDate.now();
         LocalDate calendar;
         GridPane gridPane;
-        AnchorPane anchorPane;
-        Label label;
-        VBox vBox;
+        DayGridPaneBase dayGridPaneBase;
         ArrayList<AppointmentInfoLabel> appointmentInfoLabels;
         int calDayOfWeekVal;
 
@@ -293,10 +292,7 @@ public class App extends Application {
                 // Possible error with LocalDate and February
                 if (m == 2 && d == 29) { break; }
 
-                label = new Label(String.valueOf(d));
-                AnchorPane.setLeftAnchor(label, 5.0); AnchorPane.setTopAnchor(label, 5.0);
-                vBox = new VBox();
-                AnchorPane.setLeftAnchor(vBox, 0.0); AnchorPane.setBottomAnchor(vBox, 0.0); AnchorPane.setRightAnchor(vBox, 0.0);
+                // Update day-of-month
                 calendar = calendar.withDayOfMonth(d);
 
                 // Define InfoLabels for all Appointments that are scheduled on the date represented by "calendar"
@@ -307,19 +303,23 @@ public class App extends Application {
                             appointmentInfoLabels.add(new AppointmentInfoLabel(appointment));
                         }
                     }
-                    vBox.getChildren().addAll(appointmentInfoLabels);
+                    // DayGridPane base with AppointmentInfoLabels
+                    dayGridPaneBase = new DayGridPaneBase(d, appointmentInfoLabels, calendar);
+
+                } else {
+                    // DayGridPane base with just day-of-month
+                    dayGridPaneBase = new DayGridPaneBase(d, calendar);
                 }
 
-                // Define the container of "day-grids." Set this AnchorPane to always grow within the GridPane.
-                anchorPane = new AnchorPane(label, vBox);
-                GridPane.setHgrow(anchorPane, Priority.ALWAYS); GridPane.setVgrow(anchorPane, Priority.ALWAYS);
+                // Creation of DayGridPane.
+                GridPane.setHgrow(dayGridPaneBase, Priority.ALWAYS); GridPane.setVgrow(dayGridPaneBase, Priority.ALWAYS);
 
-                // Placement on GridPane
+                // Placement on Month-GridPane
                 calDayOfWeekVal = calendar.getDayOfWeek().getValue();
                 if (calDayOfWeekVal == 7) {
-                    gridPane.add(anchorPane, 0, guiWeekValue);
+                    gridPane.add(dayGridPaneBase, 0, guiWeekValue);
                 } else {
-                    gridPane.add(anchorPane, calDayOfWeekVal, guiWeekValue);
+                    gridPane.add(dayGridPaneBase, calDayOfWeekVal, guiWeekValue);
                 }
                 if (calDayOfWeekVal % 6 == 0) {
                     guiWeekValue++;
@@ -328,16 +328,18 @@ public class App extends Application {
 
             // Store the GridPane
             gridPane.setGridLinesVisible(true);
-            currentYearCalendarGrids.put(m, gridPane);
+            currentYearCalendarMonthGridpanes.put(m, gridPane);
         }
 
     }
 
     /** Creates a new Appointment, defining its data and updating the GUI. */
     public void createNewAppointment(@NotNull Client client, String name, LocalDate date, LocalTime time, TimePeriod timePeriod) {
+
         Appointment appointment = new Appointment(name, date, time, timePeriod);
         client.defineNewAppointment(appointment);
         appointments.add(appointment);
+
     }
 
     /**
@@ -348,12 +350,12 @@ public class App extends Application {
         if (direction == 0 && (activeMonthValue - 1 != 0)) {
             activeMonthValue -= 1;
             variableDate = variableDate.withMonth(activeMonthValue);
-            calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue));
+            calendarController.setCalendarGridContent(currentYearCalendarMonthGridpanes.get(activeMonthValue));
             calendarController.updateMonthLabelText(variableDate.getMonth().toString());
         } else if (direction == 1 && (activeMonthValue + 1 != 13)){
             activeMonthValue += 1;
             variableDate = variableDate.withMonth(activeMonthValue);
-            calendarController.setCalendarGridContent(currentYearCalendarGrids.get(activeMonthValue));
+            calendarController.setCalendarGridContent(currentYearCalendarMonthGridpanes.get(activeMonthValue));
             calendarController.updateMonthLabelText(variableDate.getMonth().toString());
         } else {
             System.out.println("Encountered illegal request.");

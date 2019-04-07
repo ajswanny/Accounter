@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 3/28/19 7:11 PM.
+ * Created by Alexander Swanson on 4/7/19 2:34 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class AppointmentInfoLabel extends Label {
 
     public AppointmentInfoLabel(@NotNull Appointment appointment) {
+
         super(appointment.toString());
 
     }
