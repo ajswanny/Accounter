@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 4/7/19 2:34 PM.
+ * Created by Alexander Swanson on 4/7/19 8:06 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -177,6 +177,7 @@ public class App extends Application {
 
     /** Initializes all Client data for the User. */
     private void initClientData() {
+        appointments = new ArrayList<>();
         clients = new ArrayList<>();
     }
 
@@ -300,7 +301,7 @@ public class App extends Application {
                     appointmentInfoLabels = new ArrayList<>();
                     for (Appointment appointment : appointments) {
                         if (appointment.getDate().equals(calendar)) {
-                            appointmentInfoLabels.add(new AppointmentInfoLabel(appointment));
+                            appointmentInfoLabels.add(new AppointmentInfoLabel(appointment, true));
                         }
                     }
                     // DayGridPane base with AppointmentInfoLabels
@@ -339,6 +340,9 @@ public class App extends Application {
         Appointment appointment = new Appointment(name, date, time, timePeriod);
         client.defineNewAppointment(appointment);
         appointments.add(appointment);
+
+        DayGridPaneBase dayGridPaneBase = (DayGridPaneBase) currentYearCalendarMonthGridpanes.get(date.getMonthValue()).getChildren().get(0);
+        dayGridPaneBase.addNewAppointmentInfoLabel(new AppointmentInfoLabel(appointment, false));
 
     }
 

@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 3/28/19 7:11 PM.
+ * Created by Alexander Swanson on 4/7/19 8:06 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -37,6 +37,12 @@ public class Appointment implements Serializable {
     public String toString() {
         String s = name;
         if (date != null) { s += " " + date.toString(); }
+        if (time != null) { s += " " + time.toString(); if (timePeriod != null) {s += " " + timePeriod.toString(); } }
+        return s;
+    }
+
+    public String toStringWithoutDate() {
+        String s = name;
         if (time != null) { s += " " + time.toString(); if (timePeriod != null) {s += " " + timePeriod.toString(); } }
         return s;
     }

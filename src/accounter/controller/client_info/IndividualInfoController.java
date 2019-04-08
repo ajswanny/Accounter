@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 3/28/19 7:09 PM.
+ * Created by Alexander Swanson on 4/7/19 8:06 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -51,7 +51,7 @@ public class IndividualInfoController extends FXMLController {
         } else {
             appointmentsContainer.getChildren().clear();
             for (Appointment appointment : appointments) {
-                appointmentsContainer.getChildren().add(new AppointmentInfoLabel(appointment));
+                appointmentsContainer.getChildren().add(new AppointmentInfoLabel(appointment, true));
             }
         }
     }

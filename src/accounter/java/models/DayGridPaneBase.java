@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 4/7/19 2:34 PM.
+ * Created by Alexander Swanson on 4/7/19 8:06 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -18,12 +18,19 @@ public class DayGridPaneBase extends AnchorPane {
 
     /* Fields */
     private ArrayList<AppointmentInfoLabel> appointmentInfoLabels;
-    private VBox appointmentInfoLabelsContainer;
+    private VBox appointmentInfoButtonContainer;
     private LocalDate localDate;
 
     /* Constructors */
-    public DayGridPaneBase(int dayOfMonth, LocalDate localDate) {
+    private DayGridPaneBase(LocalDate localDate) {
         super();
+        this.localDate = localDate;
+        appointmentInfoLabels = new ArrayList<>();
+        appointmentInfoButtonContainer = new VBox();
+    }
+
+    public DayGridPaneBase(int dayOfMonth, LocalDate localDate) {
+        this(localDate);
 
         // Init date label
         Label label = new Label(String.valueOf(dayOfMonth));
@@ -31,17 +38,16 @@ public class DayGridPaneBase extends AnchorPane {
         AnchorPane.setTopAnchor(label, 5.0);
 
         // Init container for AppointmentInfoLabels
-        appointmentInfoLabelsContainer = new VBox();
-        AnchorPane.setLeftAnchor(appointmentInfoLabelsContainer, 0.0);
-        AnchorPane.setBottomAnchor(appointmentInfoLabelsContainer, 0.0);
-        AnchorPane.setRightAnchor(appointmentInfoLabelsContainer, 0.0);
+        AnchorPane.setLeftAnchor(appointmentInfoButtonContainer, 0.0);
+        AnchorPane.setRightAnchor(appointmentInfoButtonContainer, 0.0);
+        appointmentInfoButtonContainer.setMaxWidth(this.getWidth());
+        appointmentInfoButtonContainer.setMaxHeight(this.getHeight());
 
-        this.getChildren().addAll(label, appointmentInfoLabelsContainer);
-        this.localDate = localDate;
+        this.getChildren().addAll(label, appointmentInfoButtonContainer);
     }
 
     public DayGridPaneBase(int dayOfMonth, ArrayList<AppointmentInfoLabel> appointments, LocalDate localDate) {
-        super();
+        this(localDate);
 
         // Init date label
         Label label = new Label(String.valueOf(dayOfMonth));
@@ -49,24 +55,30 @@ public class DayGridPaneBase extends AnchorPane {
         AnchorPane.setTopAnchor(label, 5.0);
 
         // Init container for AppointmentInfoLabels
-        appointmentInfoLabelsContainer = new VBox();
-        AnchorPane.setLeftAnchor(appointmentInfoLabelsContainer, 0.0);
-        AnchorPane.setBottomAnchor(appointmentInfoLabelsContainer, 0.0);
-        AnchorPane.setRightAnchor(appointmentInfoLabelsContainer, 0.0);
+        AnchorPane.setLeftAnchor(appointmentInfoButtonContainer, 1.0);
+        AnchorPane.setRightAnchor(appointmentInfoButtonContainer, 1.0);
+        appointmentInfoButtonContainer.setMaxWidth(this.getWidth());
+        appointmentInfoButtonContainer.setMaxHeight(this.getHeight());
 
         if (!appointments.isEmpty()) {
-            appointmentInfoLabels = new ArrayList<>(appointments);
-            appointmentInfoLabelsContainer.getChildren().addAll(appointmentInfoLabels);
+            appointmentInfoLabels.addAll(appointments);
+            appointmentInfoButtonContainer.getChildren().addAll(appointmentInfoLabels);
         }
 
-        this.getChildren().addAll(label, appointmentInfoLabelsContainer);
-        this.localDate = localDate;
+        this.getChildren().addAll(label, appointmentInfoButtonContainer);
     }
 
     /* Methods */
     public void addNewAppointmentInfoLabel(AppointmentInfoLabel appointmentInfoLabel) {
+        AnchorPane.setLeftAnchor(appointmentInfoLabel, 0.0);
+        AnchorPane.setRightAnchor(appointmentInfoLabel, 0.0);
         appointmentInfoLabels.add(appointmentInfoLabel);
-        appointmentInfoLabelsContainer.getChildren().add(appointmentInfoLabel);
+        appointmentInfoButtonContainer.getChildren().add(appointmentInfoLabel);
+    }
+
+    /* Getters */
+    public LocalDate getLocalDate() {
+        return localDate;
     }
 
 }
