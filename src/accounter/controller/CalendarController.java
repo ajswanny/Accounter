@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 3/28/19 7:10 PM.
+ * Created by Alexander Swanson on 4/9/19 11:40 AM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -10,12 +10,12 @@ import accounter.App;
 import accounter.java.client.Client;
 import accounter.java.models.ClientInfoButton;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.*;
-import org.jetbrains.annotations.NotNull;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,8 +24,6 @@ import java.util.ResourceBundle;
 public class CalendarController extends FXMLController {
 
     private ArrayList<ClientInfoButton> clientButtons;
-
-    private static CalendarController calendarControllerInstance;
 
     @FXML
     private MenuItem accounterSettings;
@@ -59,7 +57,6 @@ public class CalendarController extends FXMLController {
 
     public CalendarController() {
         System.out.println("Initialized instance of CalendarController.");
-        calendarControllerInstance = this;
     }
 
     @Override
@@ -132,4 +129,8 @@ public class CalendarController extends FXMLController {
         currentMonth.setText(newMonthName);
     }
 
+    /* Getters */
+    public AnchorPane getCalendarGridContainer() {
+        return calendarGridContainer;
+    }
 }

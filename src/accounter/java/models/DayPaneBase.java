@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 4/7/19 8:06 PM.
+ * Created by Alexander Swanson on 4/9/19 11:40 AM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 
-public class DayGridPaneBase extends AnchorPane {
+public class DayPaneBase extends AnchorPane {
 
     /* Fields */
     private ArrayList<AppointmentInfoLabel> appointmentInfoLabels;
@@ -22,14 +22,16 @@ public class DayGridPaneBase extends AnchorPane {
     private LocalDate localDate;
 
     /* Constructors */
-    private DayGridPaneBase(LocalDate localDate) {
+    private DayPaneBase(LocalDate localDate) {
         super();
         this.localDate = localDate;
         appointmentInfoLabels = new ArrayList<>();
         appointmentInfoButtonContainer = new VBox();
+        appointmentInfoButtonContainer.setLayoutX(10.0);
+        appointmentInfoButtonContainer.setLayoutY(10.0);
     }
 
-    public DayGridPaneBase(int dayOfMonth, LocalDate localDate) {
+    public DayPaneBase(int dayOfMonth, LocalDate localDate) {
         this(localDate);
 
         // Init date label
@@ -46,7 +48,7 @@ public class DayGridPaneBase extends AnchorPane {
         this.getChildren().addAll(label, appointmentInfoButtonContainer);
     }
 
-    public DayGridPaneBase(int dayOfMonth, ArrayList<AppointmentInfoLabel> appointments, LocalDate localDate) {
+    public DayPaneBase(int dayOfMonth, ArrayList<AppointmentInfoLabel> appointments, LocalDate localDate) {
         this(localDate);
 
         // Init date label
@@ -70,8 +72,6 @@ public class DayGridPaneBase extends AnchorPane {
 
     /* Methods */
     public void addNewAppointmentInfoLabel(AppointmentInfoLabel appointmentInfoLabel) {
-        AnchorPane.setLeftAnchor(appointmentInfoLabel, 0.0);
-        AnchorPane.setRightAnchor(appointmentInfoLabel, 0.0);
         appointmentInfoLabels.add(appointmentInfoLabel);
         appointmentInfoButtonContainer.getChildren().add(appointmentInfoLabel);
     }

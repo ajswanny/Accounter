@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 4/7/19 8:06 PM.
+ * Created by Alexander Swanson on 4/9/19 11:40 AM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -14,7 +14,7 @@ import accounter.java.client.Client;
 import accounter.java.client.Corporation;
 import accounter.java.client.Individual;
 import accounter.java.models.AppointmentInfoLabel;
-import accounter.java.models.DayGridPaneBase;
+import accounter.java.models.DayPaneBase;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -99,9 +99,9 @@ public class App extends Application {
 
         // Load resources
         initClientData();
-        initMonthCalendarGrids();
         initFxmlControllers();
         initAltStages();
+        initMonthCalendarGrids();
 
         // Setup Stage
         primaryStage = new Stage();
@@ -277,7 +277,7 @@ public class App extends Application {
         LocalDate localDate = LocalDate.now();
         LocalDate calendar;
         GridPane gridPane;
-        DayGridPaneBase dayGridPaneBase;
+        DayPaneBase dayPaneBase;
         ArrayList<AppointmentInfoLabel> appointmentInfoLabels;
         int calDayOfWeekVal;
 
@@ -305,22 +305,22 @@ public class App extends Application {
                         }
                     }
                     // DayGridPane base with AppointmentInfoLabels
-                    dayGridPaneBase = new DayGridPaneBase(d, appointmentInfoLabels, calendar);
+                    dayPaneBase = new DayPaneBase(d, appointmentInfoLabels, calendar);
 
                 } else {
                     // DayGridPane base with just day-of-month
-                    dayGridPaneBase = new DayGridPaneBase(d, calendar);
+                    dayPaneBase = new DayPaneBase(d, calendar);
                 }
 
                 // Creation of DayGridPane.
-                GridPane.setHgrow(dayGridPaneBase, Priority.ALWAYS); GridPane.setVgrow(dayGridPaneBase, Priority.ALWAYS);
+                GridPane.setHgrow(dayPaneBase, Priority.ALWAYS); GridPane.setVgrow(dayPaneBase, Priority.ALWAYS);
 
                 // Placement on Month-GridPane
                 calDayOfWeekVal = calendar.getDayOfWeek().getValue();
                 if (calDayOfWeekVal == 7) {
-                    gridPane.add(dayGridPaneBase, 0, guiWeekValue);
+                    gridPane.add(dayPaneBase, 0, guiWeekValue);
                 } else {
-                    gridPane.add(dayGridPaneBase, calDayOfWeekVal, guiWeekValue);
+                    gridPane.add(dayPaneBase, calDayOfWeekVal, guiWeekValue);
                 }
                 if (calDayOfWeekVal % 6 == 0) {
                     guiWeekValue++;
@@ -341,8 +341,8 @@ public class App extends Application {
         client.defineNewAppointment(appointment);
         appointments.add(appointment);
 
-        DayGridPaneBase dayGridPaneBase = (DayGridPaneBase) currentYearCalendarMonthGridpanes.get(date.getMonthValue()).getChildren().get(0);
-        dayGridPaneBase.addNewAppointmentInfoLabel(new AppointmentInfoLabel(appointment, false));
+        DayPaneBase dayPaneBase = (DayPaneBase) currentYearCalendarMonthGridpanes.get(date.getMonthValue()).getChildren().get(0);
+        dayPaneBase.addNewAppointmentInfoLabel(new AppointmentInfoLabel(appointment, false));
 
     }
 
