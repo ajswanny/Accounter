@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 3/28/19 7:10 PM.
+ * Created by Alexander Swanson on 4/14/19 10:55 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -56,6 +56,8 @@ public class NewAppointmentDialogueController extends FXMLController {
         dateInput.setValue(LocalDate.now());
 
         createNewAppointment.setOnAction(event -> {
+
+            // Parse and register input.
             String hoursValue = hoursSpinner.getValue().toString();
             if (hoursValue.length() == 1) { hoursValue = "0" + hoursValue ; }
             String time = hoursValue + ":" + minutesSpinner.getValue() + " " + periodSpinner.getValue().toString();
@@ -67,6 +69,11 @@ public class NewAppointmentDialogueController extends FXMLController {
                     periodSpinner.getValue()
             );
             instance.requestCloseForWindow(App.ApplicationWindow.NEW_APPOINTMENT_DIALOGUE);
+
+            // Reset values.
+            nameInput.clear();
+            dateInput.setValue(LocalDate.now());
+
         });
 
     }

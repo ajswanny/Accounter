@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 4/9/19 11:40 AM.
+ * Created by Alexander Swanson on 4/14/19 10:55 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -19,8 +19,10 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -37,9 +39,11 @@ import java.util.HashMap;
 public class App extends Application {
 
     /* TODO
-        Calendar tracking of new and deleted Appointments
-        Fix bug when trying to switch to December from GUI
-        Fix bug when pressing month-switching buttons too quickly
+        Formatting of AppointmentInfoLabels
+        Client and Appointment serialization
+//        Calendar tracking of new and deleted Appointments
+//        Fix bug when trying to switch to December from GUI
+//        Fix bug when pressing month-switching buttons too quickly
 //        Calendar
 //        Time implementation for Appointment
 //        Date implementation for Appointment
@@ -76,7 +80,9 @@ public class App extends Application {
 
     private ArrayList<Appointment> appointments;
 
-    public HashMap<Integer, GridPane> currentYearCalendarMonthGridpanes;
+    private HashMap<Integer, GridPane> currentYearCalendarMonthGridpanes;
+
+    private HashMap<Integer, DayPaneBase> currentYearDayPaneBases;
 
     public LocalDate variableDate = LocalDate.now();
 
@@ -274,12 +280,14 @@ public class App extends Application {
 
         // Prep vars
         currentYearCalendarMonthGridpanes = new HashMap<>();
+        currentYearDayPaneBases = new HashMap<>(365);
         LocalDate localDate = LocalDate.now();
         LocalDate calendar;
         GridPane gridPane;
         DayPaneBase dayPaneBase;
         ArrayList<AppointmentInfoLabel> appointmentInfoLabels;
         int calDayOfWeekVal;
+        int dayOfYear = 1;
 
         // Initialize a GridPane for each month of the current year.
         for (int m = 1; m < 13; m++) {
@@ -325,9 +333,24 @@ public class App extends Application {
                 if (calDayOfWeekVal % 6 == 0) {
                     guiWeekValue++;
                 }
+
+                // Record the DayPaneBase of the current day of the year in calculation.
+                currentYearDayPaneBases.put(dayOfYear, dayPaneBase);
+                dayOfYear++;
+
             }
 
-            // Store the GridPane
+            // Set height constraints for GridPane rows and store the object
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.prefHeightProperty().bind(calendarController.getCalendarGridContainer().prefHeightProperty().divide(6));
+            for (int i = 0; i < gridPane.getRowCount(); i++) {
+                gridPane.getRowConstraints().add(rowConstraints);
+            }
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.prefWidthProperty().bind(calendarController.getCalendarGridContainer().prefWidthProperty().divide(7));
+            for (int i = 0; i < gridPane.getColumnCount(); i++) {
+                gridPane.getColumnConstraints().add(columnConstraints);
+            }
             gridPane.setGridLinesVisible(true);
             currentYearCalendarMonthGridpanes.put(m, gridPane);
         }
@@ -337,12 +360,27 @@ public class App extends Application {
     /** Creates a new Appointment, defining its data and updating the GUI. */
     public void createNewAppointment(@NotNull Client client, String name, LocalDate date, LocalTime time, TimePeriod timePeriod) {
 
+        // Update data.
         Appointment appointment = new Appointment(name, date, time, timePeriod);
         client.defineNewAppointment(appointment);
         appointments.add(appointment);
 
-        DayPaneBase dayPaneBase = (DayPaneBase) currentYearCalendarMonthGridpanes.get(date.getMonthValue()).getChildren().get(0);
+        // Update UI.
+        DayPaneBase dayPaneBase = (DayPaneBase) currentYearCalendarMonthGridpanes.get(date.getMonthValue()).getChildren().get(date.getDayOfMonth()-1);
         dayPaneBase.addNewAppointmentInfoLabel(new AppointmentInfoLabel(appointment, false));
+
+    }
+
+    public void deleteAppointment(Appointment appointment) {
+
+        // Update data.
+        appointments.remove(appointment);
+        for (Client client : clients) {
+            client.getAppointments().remove(appointment);
+        }
+
+        // Update UI.
+        currentYearDayPaneBases.get(appointment.getDate().getDayOfYear()).removeAppointmentInfoLabelOfAppointment(appointment);
 
     }
 

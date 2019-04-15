@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 3/28/19 7:10 PM.
+ * Created by Alexander Swanson on 4/14/19 10:55 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -15,7 +15,7 @@ public abstract class Client implements Serializable {
 
     String sid;
 
-    private ArrayList<Appointment> appointments;
+    protected ArrayList<Appointment> appointments;
 
     /* Methods */
     public void defineNewAppointment(Appointment appointment) {

@@ -1,10 +1,12 @@
 /*
- * Created by Alexander Swanson on 3/28/19 7:11 PM.
+ * Created by Alexander Swanson on 4/14/19 10:55 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
 
 package accounter.java.client;
+
+import java.util.ArrayList;
 
 public class Individual extends Client {
 
@@ -15,11 +17,10 @@ public class Individual extends Client {
 
     /* Constructors */
     public Individual(String firstName, String lastName) {
-
+        this.appointments = new ArrayList<>();
         this.firstName = firstName;
         this.lastName = lastName;
         sid = firstName + " " + lastName;
-
     }
 
     /* Getters */
