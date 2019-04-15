@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 4/14/19 10:55 PM.
+ * Created by Alexander Swanson on 4/15/19 9:02 AM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -30,7 +30,11 @@ import javafx.stage.WindowEvent;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -40,7 +44,7 @@ public class App extends Application {
 
     /* TODO
         Formatting of AppointmentInfoLabels
-        Client and Appointment serialization
+//        Client and Appointment serialization
 //        Calendar tracking of new and deleted Appointments
 //        Fix bug when trying to switch to December from GUI
 //        Fix bug when pressing month-switching buttons too quickly
@@ -88,7 +92,10 @@ public class App extends Application {
 
     private int activeMonthValue = variableDate.getMonthValue();
 
+    private File CLIENTS_SER_FP = new File("res/ser/clients/");
+
     private static App instance;
+
     private boolean verbose;
 
     /**
@@ -123,12 +130,26 @@ public class App extends Application {
 
     @Override
     public void stop() {
+
+        // Store data if it exists.
+        try {
+            for (Client element : clients) {
+
+                FileOutputStream fOutStream = new FileOutputStream(CLIENTS_SER_FP.getPath() + "/" + element.getNid() + ".ser");
+                ObjectOutputStream objectOutStream = new ObjectOutputStream(fOutStream);
+                objectOutStream.writeObject(element);
+
+            }
+        } catch (IOException e) {
+            System.out.println("IOException when serializing Clients.");
+        }
+
         System.out.println("Closing application.");
+
     }
 
     private void debug() {
-        createNewIndividual("Beck", "Martin");
-        createNewCorporation("Microsoft");
+
     }
 
     private void initFxmlControllers() throws IOException {
@@ -173,18 +194,49 @@ public class App extends Application {
 
     /** Defines a new custom JavaFX Stage */
     private Stage initAltStage(@NotNull FXMLController fxmlController, EventHandler<WindowEvent> actionOnCloseRequest) {
+
         Stage stage = new Stage(StageStyle.UNIFIED);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.setScene(fxmlController.getScene());
         stage.setOnCloseRequest(actionOnCloseRequest);
         return stage;
+
     }
 
     /** Initializes all Client data for the User. */
     private void initClientData() {
         appointments = new ArrayList<>();
         clients = new ArrayList<>();
+
+        // Load data if available.
+        try {
+
+            // Define the stream to access all files in the 'clients' directory.
+            Path dir = Paths.get(CLIENTS_SER_FP.toURI());
+            DirectoryStream<Path> dir_stream = Files.newDirectoryStream(dir);
+            FileInputStream fileInputStream;
+            ObjectInputStream objectInputStream;
+
+            // Load a Client from each file within the 'clients' directory in 'data'.
+            for (Path entry : dir_stream) {
+
+                fileInputStream = new FileInputStream(entry.toString());
+                objectInputStream = new ObjectInputStream(fileInputStream);
+
+                Client client = (Client) objectInputStream.readObject();
+                clients.add(client);
+
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Exception at 'initClientData()'.");
+        }
+
+        for (Client client : clients) {
+            appointments.addAll(client.getAppointments());
+        }
+
     }
 
     /* GUI Alternation */
@@ -272,6 +324,9 @@ public class App extends Application {
     public static void deleteClient(Client client) {
         instance.clients.remove(client);
         instance.calendarController.removeClientInfoButton(client);
+
+        File clientSerFile = new File(instance.CLIENTS_SER_FP.getPath() + "/" + client.getNid() + ".ser");
+        boolean deleted = clientSerFile.delete();
     }
 
     /* Calendar Grid Creation */
