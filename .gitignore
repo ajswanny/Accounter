@@ -76,3 +76,5 @@ lib/javafx-sdk-11.0.2/lib/libprism_common.dylib
 lib/javafx-sdk-11.0.2/lib/libprism_es2.dylib
 lib/javafx-sdk-11.0.2/lib/libprism_sw.dylib
 res/old-versions/version-0.1/src/.DS_Store
+
+.ser
