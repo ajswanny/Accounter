@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 4/15/19 9:02 AM.
+ * Created by Alexander Swanson on 4/15/19 10:18 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -19,6 +19,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -70,7 +71,7 @@ public class App extends Application {
     private Stage individualInfoStage;
     private Stage corporationInfoStage;
 
-    private CalendarController calendarController;
+    public CalendarController calendarController;
     private FXMLController applicationSettingsController;
     private FXMLController newIndividualDialogueController;
     private FXMLController newCorporationDialogueController;
@@ -118,6 +119,8 @@ public class App extends Application {
 
         // Setup Stage
         primaryStage = new Stage();
+        primaryStage.setMinWidth(600);
+        primaryStage.setMinHeight(432);
         primaryStage.setScene(calendarController.getScene());
 
         // Define current month for the Calendar Grid.
@@ -311,13 +314,13 @@ public class App extends Application {
     public void createNewIndividual(String firstName, String lastName) {
         Individual c = new Individual(firstName, lastName);
         clients.add(c);
-        instance.calendarController.createNewClientButton(c);
+        instance.calendarController.createNewClientInfoButton(c);
     }
 
     public void createNewCorporation(String name) {
         Corporation c = new Corporation(name);
         clients.add(c);
-        instance.calendarController.createNewClientButton(c);
+        instance.calendarController.createNewClientInfoButton(c);
     }
 
     /** Complete deletion of a Client (UI and data) */
@@ -406,7 +409,8 @@ public class App extends Application {
             for (int i = 0; i < gridPane.getColumnCount(); i++) {
                 gridPane.getColumnConstraints().add(columnConstraints);
             }
-            gridPane.setGridLinesVisible(true);
+            gridPane.setPadding(new Insets(0, 1, 1, 0));
+
             currentYearCalendarMonthGridpanes.put(m, gridPane);
         }
 

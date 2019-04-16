@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 4/9/19 11:40 AM.
+ * Created by Alexander Swanson on 4/15/19 10:18 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -38,7 +39,10 @@ public class CalendarController extends FXMLController {
     private MenuItem newCorporation;
 
     @FXML
-    private VBox clientButtonsContainer;
+    public VBox clientButtonsContainer;
+
+    @FXML
+    public ScrollPane buttonsScrollpane;
 
     @FXML
     private Button previousMonth;
@@ -64,6 +68,7 @@ public class CalendarController extends FXMLController {
 
         super.initialize(location, resources);
 
+        buttonsScrollpane.getStylesheets().clear();
 
         // Define the Menu
         accounterSettings.setOnAction(event -> instance.requestDisplayForWindow(App.ApplicationWindow.APPLICATION_SETTINGS));
@@ -74,7 +79,9 @@ public class CalendarController extends FXMLController {
         // Init ClientInfoButtons
         clientButtons = new ArrayList<>();
         for (Client client : instance.getClients()) {
-            clientButtons.add(new ClientInfoButton(client));
+            ClientInfoButton button = new ClientInfoButton(client);
+            button.setMaxWidth(Double.MAX_VALUE);
+            clientButtons.add(button);
         }
         clientButtonsContainer.getChildren().addAll(clientButtons);
 
@@ -84,14 +91,17 @@ public class CalendarController extends FXMLController {
 
         // Month and Year text
         currentYear.setText(String.valueOf(instance.variableDate.getYear()));
-        currentMonth.setText(instance.variableDate.getMonth().toString());
+        String monthName = instance.variableDate.getMonth().name();
+        monthName = monthName.substring(0, 1).toUpperCase() + monthName.substring(1).toLowerCase();
+        currentMonth.setText(monthName);
 
     }
 
     /** Creates a new ClientInfoButton for the GUI */
-    public void createNewClientButton(Client client) {
+    public void createNewClientInfoButton(Client client) {
 
         ClientInfoButton button = new ClientInfoButton(client);
+        button.prefWidthProperty().bind(clientButtonsContainer.prefWidthProperty());
         clientButtons.add(button);
         clientButtonsContainer.getChildren().add(button);
 
@@ -126,7 +136,9 @@ public class CalendarController extends FXMLController {
     }
 
     public void updateMonthLabelText(String newMonthName) {
-        currentMonth.setText(newMonthName);
+        String monthName = newMonthName;
+        monthName = monthName.substring(0, 1).toUpperCase() + monthName.substring(1).toLowerCase();
+        currentMonth.setText(monthName);
     }
 
     /* Getters */

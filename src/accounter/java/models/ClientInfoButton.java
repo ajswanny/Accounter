@@ -1,5 +1,5 @@
 /*
- * Created by Alexander Swanson on 3/28/19 7:11 PM.
+ * Created by Alexander Swanson on 4/15/19 10:18 PM.
  * Email: alexanderjswanson@icloud.com.
  * Copyright © 2019. All rights reserved.
  */
@@ -24,6 +24,8 @@ public class ClientInfoButton extends Button {
 
     /* Default Constructor */
     public ClientInfoButton(@NotNull Client client) {
+
+        super();
 
         this.setText(client.toString());
         respectiveClient = client;

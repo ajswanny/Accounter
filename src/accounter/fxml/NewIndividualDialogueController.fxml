@@ -3,12 +3,18 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<!--
+  ~ Created by Alexander Swanson on 4/15/19 10:18 PM.
+  ~ Email: alexanderjswanson@icloud.com.
+  ~ Copyright © 2019. All rights reserved.
+  -->
+
 <AnchorPane fx:id="root" prefHeight="174.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="accounter.controller.new_client.NewIndividualDialogueController">
    <children>
       <Label layoutX="26.0" layoutY="38.0" text="First name:" />
       <Label layoutX="26.0" layoutY="77.0" text="Last name:" />
       <TextField fx:id="firstNameInput" layoutX="107.0" layoutY="33.0" prefHeight="27.0" prefWidth="118.0" />
       <TextField fx:id="lastNameInput" layoutX="107.0" layoutY="72.0" prefHeight="27.0" prefWidth="118.0" />
-      <Button fx:id="createNewIndividual" layoutX="166.0" layoutY="118.0" mnemonicParsing="false" text="Accept" />
+      <Button fx:id="createNewIndividual" layoutX="166.0" layoutY="118.0" mnemonicParsing="false" text="Done" />
    </children>
 </AnchorPane>

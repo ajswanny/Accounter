@@ -2,13 +2,19 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<!--
+  ~ Created by Alexander Swanson on 4/15/19 10:18 PM.
+  ~ Email: alexanderjswanson@icloud.com.
+  ~ Copyright © 2019. All rights reserved.
+  -->
+
 <AnchorPane fx:id="root" prefHeight="195.0" prefWidth="244.0" stylesheets="@../css/NewAppointmentDialogueController.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="accounter.controller.NewAppointmentDialogueController">
    <children>
       <Label layoutX="19.0" layoutY="25.0" text="Name:" />
       <TextField fx:id="nameInput" layoutX="77.0" layoutY="20.0" prefHeight="27.0" prefWidth="148.0" />
       <Label layoutX="19.0" layoutY="68.0" text="Date:" />
       <DatePicker fx:id="dateInput" layoutX="78.0" layoutY="63.0" prefHeight="27.0" prefWidth="148.0" />
-      <Button fx:id="createNewAppointment" layoutX="165.0" layoutY="151.0" mnemonicParsing="false" text="Accept" />
+      <Button fx:id="createNewAppointment" layoutX="165.0" layoutY="151.0" mnemonicParsing="false" text="Done" />
       <Label layoutX="20.0" layoutY="111.0" text="Time:" />
       <Spinner fx:id="hoursSpinner" layoutX="106.0" layoutY="106.0" prefHeight="27.0" prefWidth="30.0" />
       <Spinner fx:id="minutesSpinner" layoutX="149.0" layoutY="106.0" prefHeight="27.0" prefWidth="34.0" />

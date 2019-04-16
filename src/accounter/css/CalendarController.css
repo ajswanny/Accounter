@@ -1,0 +1,56 @@
+/*
+ * Created by Alexander Swanson on 4/15/19 10:18 PM.
+ * Email: alexanderjswanson@icloud.com.
+ * Copyright © 2019. All rights reserved.
+ */
+
+#BORDER_PANE_LEFT_ROOT_CONTAINER {
+    -fx-border-color: transparent black transparent transparent;
+}
+
+#CLIENTS_LABEL {
+    -fx-border-color: transparent transparent black transparent;
+    -fx-background-color: #F5F5F5;
+}
+
+#MONTH_CONTROLS_CONTAINER {
+    -fx-border-color: transparent transparent black transparent;
+    -fx-background-color: white;
+}
+
+#CLIENT_INFO_BUTTONS_CONTAINER {
+    -fx-background-color: #F5F5F5;
+}
+
+#DAYS_OF_WEEK_LABELS_CONTAINER {
+    -fx-border-color: transparent transparent #C8C8C8 transparent;
+    -fx-background-color: white;
+}
+
+#ACTIVE_MONTH_LABEL {
+    -fx-font-family: ".SF NS Text";
+    -fx-font-size: 20px;
+}
+
+#ACTIVE_YEAR_LABEL {
+    -fx-font-family: ".SF NS Text";
+    -fx-font-size: 12px;
+}
+
+#CALENDAR_CONTAINER {
+    -fx-background-color: #F5F5F5;
+}
+
+ClientInfoButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent black transparent;
+}
+
+ScrollPane {
+    -fx-border-color: transparent;
+}
+
+DayPaneBase {
+    -fx-border-color: #C8C8C8;
+    -fx-background-color: white;
+}

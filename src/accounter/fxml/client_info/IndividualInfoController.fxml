@@ -3,13 +3,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="accounter.controller.client_info.IndividualInfoController">
+<!--
+  ~ Created by Alexander Swanson on 4/15/19 10:18 PM.
+  ~ Email: alexanderjswanson@icloud.com.
+  ~ Copyright © 2019. All rights reserved.
+  -->
+
+<AnchorPane fx:id="root" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="accounter.controller.client_info.IndividualInfoController">
    <children>
       <Label layoutX="44.0" layoutY="51.0" text="First name:" />
-      <Label layoutX="44.0" layoutY="116.0" text="Last name:" />
+      <Label layoutX="44.0" layoutY="87.0" text="Last name:" />
       <Label fx:id="firstName" layoutX="160.0" layoutY="51.0" text="FIRST_NAME" />
-      <Label fx:id="lastName" layoutX="160.0" layoutY="116.0" text="LAST_NAME" />
-      <Label fx:id="appointmentsLabel" layoutX="44.0" layoutY="173.0" text="Appointments:" />
-      <VBox fx:id="appointmentsContainer" layoutX="35.0" layoutY="200.0" prefHeight="153.0" prefWidth="230.0" />
+      <Label fx:id="lastName" layoutX="160.0" layoutY="87.0" text="LAST_NAME" />
+      <Label fx:id="appointmentsLabel" layoutX="44.0" layoutY="123.0" text="Appointments:" />
+      <VBox fx:id="appointmentsContainer" layoutX="35.0" layoutY="150.0" prefHeight="153.0" prefWidth="230.0" />
    </children>
 </AnchorPane>
