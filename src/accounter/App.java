@@ -401,12 +401,12 @@ public class App extends Application {
             // Set height constraints for GridPane rows and store the object
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.prefHeightProperty().bind(calendarController.getCalendarGridContainer().prefHeightProperty().divide(6));
-            for (int i = 0; i < gridPane.getRowCount(); i++) {
+            for (int i = 0; i < 6; i++) {
                 gridPane.getRowConstraints().add(rowConstraints);
             }
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.prefWidthProperty().bind(calendarController.getCalendarGridContainer().prefWidthProperty().divide(7));
-            for (int i = 0; i < gridPane.getColumnCount(); i++) {
+            for (int i = 0; i < 7; i++) {
                 gridPane.getColumnConstraints().add(columnConstraints);
             }
             gridPane.setPadding(new Insets(0, 1, 1, 0));
