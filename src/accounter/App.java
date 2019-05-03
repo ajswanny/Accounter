@@ -109,6 +109,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        debug();
+
         verbose = false;
 
         // Load resources
@@ -152,6 +154,9 @@ public class App extends Application {
     }
 
     private void debug() {
+
+        System.out.println(System.getenv("ProgramFiles"));
+        Platform.exit();
 
     }
 
