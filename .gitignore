@@ -33,3 +33,5 @@ src/META-INF
 .ser
 .DS_Store
 res/ser/
+META-INF/MANIFEST.MF
+old-versions/version-0.1/src/.DS_Store
