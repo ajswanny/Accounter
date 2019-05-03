@@ -25,13 +25,10 @@ hs_err_pid*
 .idea/
 Accounter.iml
 out/
-src/accounter/.DS_Store
 lib
-old-versions/version-0.1/src/.DS_Store
 src/META-INF
 
 .ser
 .DS_Store
 res/ser/
-META-INF/MANIFEST.MF
-old-versions/version-0.1/src/.DS_Store
+META-INF/
