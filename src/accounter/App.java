@@ -71,7 +71,7 @@ public class App extends Application {
     private Stage individualInfoStage;
     private Stage corporationInfoStage;
 
-    public CalendarController calendarController;
+    private CalendarController calendarController;
     private FXMLController applicationSettingsController;
     private FXMLController newIndividualDialogueController;
     private FXMLController newCorporationDialogueController;
