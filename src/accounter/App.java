@@ -35,24 +35,12 @@ import java.io.*;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class App extends Application {
-
-    /* TODO
-        Formatting of AppointmentInfoLabels
-//        Client and Appointment serialization
-//        Calendar tracking of new and deleted Appointments
-//        Fix bug when trying to switch to December from GUI
-//        Fix bug when pressing month-switching buttons too quickly
-//        Calendar
-//        Time implementation for Appointment
-//        Date implementation for Appointment
-     */
 
     /* Fields */
     public enum ApplicationWindow {
@@ -95,6 +83,8 @@ public class App extends Application {
 
     private File CLIENTS_SER_FP = new File("res/ser/clients/");
 
+    private File clientsSERs;
+
     private static App instance;
 
     private boolean verbose;
@@ -110,8 +100,18 @@ public class App extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         debug();
-
         verbose = false;
+
+        // Setup Filesystem
+        File systemDirectory = new File(System.getenv("ProgramFiles") + "/Accounter");
+        if (!systemDirectory.exists()) {
+            if (new File(System.getenv("ProgramFiles") + "/Accounter").mkdir() && new File(System.getenv("ProgramFiles") + "/Accounter/ser").mkdir()) {
+                if (verbose) System.out.println("Created 'Accounter' directory successfully.");
+            } else {
+                throw new RuntimeException("Could not create 'Accounter' directory.");
+            }
+        }
+        clientsSERs = new File(System.getenv("ProgramFiles") + "Accounter/ser");
 
         // Load resources
         initClientData();
@@ -140,7 +140,7 @@ public class App extends Application {
         try {
             for (Client element : clients) {
 
-                FileOutputStream fOutStream = new FileOutputStream(CLIENTS_SER_FP.getPath() + "/" + element.getNid() + ".ser");
+                FileOutputStream fOutStream = new FileOutputStream(clientsSERs);
                 ObjectOutputStream objectOutStream = new ObjectOutputStream(fOutStream);
                 objectOutStream.writeObject(element);
 
@@ -155,8 +155,6 @@ public class App extends Application {
 
     private void debug() {
 
-        System.out.println(System.getenv("ProgramFiles"));
-        Platform.exit();
 
     }
 
@@ -221,8 +219,7 @@ public class App extends Application {
         try {
 
             // Define the stream to access all files in the 'clients' directory.
-            Path dir = Paths.get(CLIENTS_SER_FP.toURI());
-            DirectoryStream<Path> dir_stream = Files.newDirectoryStream(dir);
+            DirectoryStream<Path> dir_stream = Files.newDirectoryStream(clientsSERs.toPath());
             FileInputStream fileInputStream;
             ObjectInputStream objectInputStream;
 
@@ -333,8 +330,10 @@ public class App extends Application {
         instance.clients.remove(client);
         instance.calendarController.removeClientInfoButton(client);
 
-        File clientSerFile = new File(instance.CLIENTS_SER_FP.getPath() + "/" + client.getNid() + ".ser");
-        boolean deleted = clientSerFile.delete();
+        File clientSerFile = new File(instance.clientsSERs.getPath() + "/" + client.getNid() + ".ser");
+        if (!clientSerFile.delete()) {
+            throw new RuntimeException("Failed to delete a Client in the filesystem.");
+        }
     }
 
     /* Calendar Grid Creation */
