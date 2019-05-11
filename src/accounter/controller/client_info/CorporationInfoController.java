@@ -13,7 +13,6 @@ import accounter.java.models.AppointmentInfoLabel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class CorporationInfoController extends FXMLController {
         }
     }
 
-    public static void setRespectiveClientData(@NotNull Corporation respectiveClient) {
+    public static void setRespectiveClientData(Corporation respectiveClient) {
         corporationInfoControllerInstance.name.setText(respectiveClient.getName());
         corporationInfoControllerInstance.initAppointmentsList(respectiveClient.getAppointments());
     }

@@ -11,13 +11,12 @@ import accounter.java.Appointment;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import org.jetbrains.annotations.NotNull;
 
 public class AppointmentInfoLabel extends Label {
 
     public Appointment appointment;
 
-    public AppointmentInfoLabel(@NotNull Appointment appointment, boolean withDate) {
+    public AppointmentInfoLabel(Appointment appointment, boolean withDate) {
 
         super();
         this.appointment = appointment;
