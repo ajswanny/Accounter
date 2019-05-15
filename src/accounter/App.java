@@ -102,10 +102,9 @@ public class App extends Application {
 
         // Setup Filesystem
         File accounterDirectory = new File(System.getenv("ProgramFiles") + "/Accounter");
-        String s = System.getenv("ProgramFiles");
         File serDirectory = new File((System.getenv("ProgramFiles") + "/Accounter/ser"));
         if (!accounterDirectory.exists()) {
-            if (accounterDirectory.mkdir() && new File(System.getenv("ProgramFiles") + "/Accounter/ser").mkdir()) {
+            if (accounterDirectory.mkdir() && serDirectory.mkdir()) {
                 if (verbose) System.out.println("Created 'Accounter' directory successfully.");
             } else {
                 throw new RuntimeException("Could not create 'Accounter' directory.");
