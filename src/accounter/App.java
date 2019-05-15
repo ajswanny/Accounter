@@ -106,7 +106,7 @@ public class App extends Application {
             if (new File(System.getenv("ProgramFiles") + "/Accounter").mkdir() && new File(System.getenv("ProgramFiles") + "/Accounter/ser").mkdir()) {
                 if (verbose) System.out.println("Created 'Accounter' directory successfully.");
             } else {
-                //throw new RuntimeException("Could not create 'Accounter' directory.");
+                throw new RuntimeException("Could not create 'Accounter' directory.");
             }
         }
         clientsSERs = new File(System.getenv("ProgramFiles") + "Accounter/ser");
