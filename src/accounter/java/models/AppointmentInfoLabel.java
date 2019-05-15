@@ -14,7 +14,7 @@ import javafx.scene.control.MenuItem;
 
 public class AppointmentInfoLabel extends Label {
 
-    public Appointment appointment;
+    Appointment appointment;
 
     public AppointmentInfoLabel(Appointment appointment, boolean withDate) {
 

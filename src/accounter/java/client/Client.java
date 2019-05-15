@@ -15,9 +15,9 @@ import java.util.ArrayList;
 public abstract class Client implements Serializable {
 
     String sid;
-    long nid = Instant.now().toEpochMilli();
+    private long nid = Instant.now().toEpochMilli();
 
-    protected ArrayList<Appointment> appointments;
+    ArrayList<Appointment> appointments;
 
     /* Methods */
     public void defineNewAppointment(Appointment appointment) {

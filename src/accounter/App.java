@@ -79,8 +79,6 @@ public class App extends Application {
 
     private int activeMonthValue = variableDate.getMonthValue();
 
-    private File CLIENTS_SER_FP = new File("res/ser/clients/");
-
     private File clientsSERs;
 
     private static App instance;
@@ -101,8 +99,8 @@ public class App extends Application {
         verbose = false;
 
         // Setup Filesystem
-        File accounterDirectory = new File(System.getenv("ProgramFiles") + "/Accounter");
-        File serDirectory = new File((System.getenv("ProgramFiles") + "/Accounter/ser"));
+        File accounterDirectory = new File(System.getenv("ProgramFiles") + "/Accounter/");
+        File serDirectory = new File((System.getenv("ProgramFiles") + "/Accounter/ser/"));
         if (!accounterDirectory.exists()) {
             if (accounterDirectory.mkdir() && serDirectory.mkdir()) {
                 if (verbose) System.out.println("Created 'Accounter' directory successfully.");
@@ -110,7 +108,7 @@ public class App extends Application {
                 throw new RuntimeException("Could not create 'Accounter' directory.");
             }
         }
-        clientsSERs = new File(System.getenv("ProgramFiles") + "Accounter/ser");
+        clientsSERs = serDirectory;
 
         // Load resources
         initClientData();
@@ -137,11 +135,12 @@ public class App extends Application {
 
         // Store data if it exists.
         try {
-            for (Client element : clients) {
+            for (Client client : clients) {
 
-                FileOutputStream fOutStream = new FileOutputStream(clientsSERs);
+                File clientSer = new File(clientsSERs.getPath() + "/" + client.getNid() + ".ser");
+                FileOutputStream fOutStream = new FileOutputStream(clientSer);
                 ObjectOutputStream objectOutStream = new ObjectOutputStream(fOutStream);
-                objectOutStream.writeObject(element);
+                objectOutStream.writeObject(client);
 
             }
         } catch (IOException e) {
