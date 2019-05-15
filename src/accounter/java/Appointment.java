@@ -7,7 +7,6 @@
 package accounter.java;
 
 import accounter.App;
-import org.jetbrains.annotations.Contract;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -22,12 +21,10 @@ public class Appointment implements Serializable {
     private App.TimePeriod timePeriod;
 
     /* Constructors */
-    @Contract(pure = true)
     public Appointment(String name) {
         this.name = name;
     }
 
-    @Contract(pure = true)
     public Appointment(String name, LocalDate date, LocalTime time, App.TimePeriod timePeriod) {
         this.name = name; this.date = date; this.time = time; this.timePeriod = timePeriod;
     }

@@ -15,7 +15,6 @@ import accounter.java.client.Individual;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import org.jetbrains.annotations.NotNull;
 
 public class ClientInfoButton extends Button {
 
@@ -23,7 +22,7 @@ public class ClientInfoButton extends Button {
     private Client respectiveClient;
 
     /* Default Constructor */
-    public ClientInfoButton(@NotNull Client client) {
+    public ClientInfoButton(Client client) {
 
         super();
 

@@ -28,8 +28,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.file.DirectoryStream;
@@ -108,7 +106,7 @@ public class App extends Application {
             if (new File(System.getenv("ProgramFiles") + "/Accounter").mkdir() && new File(System.getenv("ProgramFiles") + "/Accounter/ser").mkdir()) {
                 if (verbose) System.out.println("Created 'Accounter' directory successfully.");
             } else {
-                throw new RuntimeException("Could not create 'Accounter' directory.");
+                //throw new RuntimeException("Could not create 'Accounter' directory.");
             }
         }
         clientsSERs = new File(System.getenv("ProgramFiles") + "Accounter/ser");
@@ -201,7 +199,7 @@ public class App extends Application {
     }
 
     /** Defines a new custom JavaFX Stage */
-    private Stage initAltStage(@NotNull FXMLController fxmlController, EventHandler<WindowEvent> actionOnCloseRequest) {
+    private Stage initAltStage(FXMLController fxmlController, EventHandler<WindowEvent> actionOnCloseRequest) {
 
         Stage stage = new Stage(StageStyle.UNIFIED);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -251,7 +249,7 @@ public class App extends Application {
         Platform.exit();
     }
 
-    public void requestDisplayForWindow(@NotNull ApplicationWindow applicationWindow) {
+    public void requestDisplayForWindow(ApplicationWindow applicationWindow) {
         switch (applicationWindow) {
             case APPLICATION_SETTINGS:
                 applicationSettingsStage.show();
@@ -281,7 +279,7 @@ public class App extends Application {
         }
     }
 
-    public void requestCloseForWindow(@NotNull ApplicationWindow applicationWindow) {
+    public void requestCloseForWindow(ApplicationWindow applicationWindow) {
         switch (applicationWindow) {
             case APPLICATION_SETTINGS:
                 applicationSettingsStage.close();
@@ -423,7 +421,7 @@ public class App extends Application {
     }
 
     /** Creates a new Appointment, defining its data and updating the GUI. */
-    public void createNewAppointment(@NotNull Client client, String name, LocalDate date, LocalTime time, TimePeriod timePeriod) {
+    public void createNewAppointment(Client client, String name, LocalDate date, LocalTime time, TimePeriod timePeriod) {
 
         // Update data.
         Appointment appointment = new Appointment(name, date, time, timePeriod);
@@ -470,7 +468,6 @@ public class App extends Application {
     }
 
     /* Getters */
-    @Contract(pure = true)
     public static App getInstance() {
         return instance;
     }
