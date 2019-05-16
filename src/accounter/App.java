@@ -95,7 +95,6 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        debug();
         verbose = false;
 
         // Setup Filesystem
@@ -136,15 +135,15 @@ public class App extends Application {
         // Store data if it exists.
         try {
             for (Client client : clients) {
-
                 File clientSer = new File(clientsSERs.getPath() + "/" + client.getNid() + ".ser");
-                FileOutputStream fOutStream = new FileOutputStream(clientSer);
-                ObjectOutputStream objectOutStream = new ObjectOutputStream(fOutStream);
-                objectOutStream.writeObject(client);
-
+                if (!clientSer.exists() && clientSer.createNewFile()) {
+                    FileOutputStream fOutStream = new FileOutputStream(clientSer);
+                    ObjectOutputStream objectOutStream = new ObjectOutputStream(fOutStream);
+                    objectOutStream.writeObject(client);
+                }
             }
         } catch (IOException e) {
-            System.out.println("IOException when serializing Clients.");
+            System.out.println("Stop procedure failed: " + e);
         }
 
         System.out.println("Closing application.");
@@ -232,7 +231,7 @@ public class App extends Application {
             }
 
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Exception at 'initClientData()'.");
+            System.out.println(e);
         }
 
         for (Client client : clients) {
