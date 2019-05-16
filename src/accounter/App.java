@@ -108,12 +108,10 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        debug();
-
         verbose = false;
 
         // Load resources
-        //initClientData();
+        initClientData();
         initFxmlControllers();
         initAltStages();
         initMonthCalendarGrids();
@@ -154,9 +152,6 @@ public class App extends Application {
 
     private void debug() {
 
-        System.out.println(System.getenv("ProgramFiles"));
-        Platform.exit();
-
     }
 
     private void initFxmlControllers() throws IOException {
@@ -180,22 +175,40 @@ public class App extends Application {
     private void initAltStages() {
 
         // ApplicationSettings
-        applicationSettingsStage = initAltStage(applicationSettingsController, f->requestCloseForWindow(ApplicationWindow.APPLICATION_SETTINGS));
+        applicationSettingsStage = initAltStage(
+                applicationSettingsController,
+                f->requestCloseForWindow(ApplicationWindow.APPLICATION_SETTINGS)
+        );
 
         // NewIndividualDialogue
-        newIndividualDialogueStage = initAltStage(newIndividualDialogueController, f->requestCloseForWindow(ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE));
+        newIndividualDialogueStage = initAltStage(
+                newIndividualDialogueController,
+                f->requestCloseForWindow(ApplicationWindow.NEW_INDIVIDUAL_DIALOGUE)
+        );
 
         // NewCorporationDialogue
-        newCorporationDialogueStage = initAltStage(newCorporationDialogueController, f->requestCloseForWindow(ApplicationWindow.NEW_CORPORATION_DIALOGUE));
+        newCorporationDialogueStage = initAltStage(
+                newCorporationDialogueController,
+                f->requestCloseForWindow(ApplicationWindow.NEW_CORPORATION_DIALOGUE)
+        );
 
         // NewAppointmentDialogue
-        newAppointmentDialogueStage = initAltStage(newAppointmentDialogueController, f->requestCloseForWindow(ApplicationWindow.NEW_APPOINTMENT_DIALOGUE));
+        newAppointmentDialogueStage = initAltStage(
+                newAppointmentDialogueController,
+                f->requestCloseForWindow(ApplicationWindow.NEW_APPOINTMENT_DIALOGUE)
+        );
 
         // IndividualInfo
-        individualInfoStage = initAltStage(individualInfoController, f->requestCloseForWindow(ApplicationWindow.INDIVIDUAL_INFO));
+        individualInfoStage = initAltStage(
+                individualInfoController,
+                f->requestCloseForWindow(ApplicationWindow.INDIVIDUAL_INFO)
+        );
 
         // CorporationInfo
-        corporationInfoStage = initAltStage(corporationInfoController, f->requestCloseForWindow(ApplicationWindow.CORPORATION_INFO));
+        corporationInfoStage = initAltStage(
+                corporationInfoController,
+                f->requestCloseForWindow(ApplicationWindow.CORPORATION_INFO)
+        );
 
     }
 
@@ -371,7 +384,7 @@ public class App extends Application {
                     appointmentInfoLabels = new ArrayList<>();
                     for (Appointment appointment : appointments) {
                         if (appointment.getDate().equals(calendar)) {
-                            appointmentInfoLabels.add(new AppointmentInfoLabel(appointment, true));
+                            appointmentInfoLabels.add(new AppointmentInfoLabel(appointment, false));
                         }
                     }
                     // DayGridPane base with AppointmentInfoLabels

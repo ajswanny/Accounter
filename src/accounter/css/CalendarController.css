@@ -54,3 +54,7 @@ DayPaneBase {
     -fx-border-color: #C8C8C8;
     -fx-background-color: white;
 }
+
+#PREV_MONTH_CONTROL, #NEXT_MONTH_CONTROL {
+	-fx-background-color: #E8E8E8;
+}

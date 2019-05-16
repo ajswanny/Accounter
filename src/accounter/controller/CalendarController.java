@@ -123,16 +123,12 @@ public class CalendarController extends FXMLController {
      * default GridPane.
      */
     public void setCalendarGridContent(GridPane calendarGrid) {
-
-
         AnchorPane.setTopAnchor(calendarGrid, 0d);
         AnchorPane.setLeftAnchor(calendarGrid, 0d);
         AnchorPane.setBottomAnchor(calendarGrid, 0d);
         AnchorPane.setRightAnchor(calendarGrid, 0d);
 
         calendarGridContainer.getChildren().setAll(calendarGrid);
-
-        // TODO: Implement cleaning of UI.
     }
 
     public void updateMonthLabelText(String newMonthName) {

@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <!--
   ~ Created by Alexander Swanson on 4/15/19 10:18 PM.
   ~ Email: alexanderjswanson@icloud.com.
   ~ Copyright © 2019. All rights reserved.
   -->
 
-<BorderPane fx:id="root" minHeight="400.0" minWidth="600.0" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/CalendarController.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="accounter.controller.CalendarController">
+<BorderPane fx:id="root" minHeight="400.0" minWidth="600.0" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/CalendarController.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="accounter.controller.CalendarController">
    <center>
       <AnchorPane>
          <children>
@@ -35,8 +45,8 @@
                            </font>
                         </Label>
                         <Region fx:id="MONTHS_CONTROL_SEPARATOR_2" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                        <Button id="prev_month_control" fx:id="previousMonth" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="&lt;" />
-                        <Button id="next_month_control" fx:id="nextMonth" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="&gt;" />
+                        <Button id="PREV_MONTH_CONTROL" fx:id="previousMonth" maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="&lt;" />
+                        <Button id="NEXT_MONTH_CONTROL" fx:id="nextMonth" maxHeight="20.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="&gt;" />
                      </children>
                      <VBox.margin>
                         <Insets />
