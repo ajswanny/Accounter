@@ -153,9 +153,6 @@ public class App extends Application {
 
     private void debug() {
 
-//        System.out.println(System.getenv("ProgramFiles"));
-//        Platform.exit();
-
     }
 
     private void initFxmlControllers() throws IOException {

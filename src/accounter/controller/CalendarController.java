@@ -101,6 +101,7 @@ public class CalendarController extends FXMLController {
     public void createNewClientInfoButton(Client client) {
 
         ClientInfoButton button = new ClientInfoButton(client);
+        button.setMaxWidth(Double.MAX_VALUE);
         button.prefWidthProperty().bind(clientButtonsContainer.prefWidthProperty());
         clientButtons.add(button);
         clientButtonsContainer.getChildren().add(button);
