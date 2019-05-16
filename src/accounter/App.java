@@ -98,8 +98,8 @@ public class App extends Application {
         verbose = false;
 
         // Setup Filesystem
-        File accounterDirectory = new File(System.getenv("ProgramFiles") + "/Accounter/");
-        File serDirectory = new File((System.getenv("ProgramFiles") + "/Accounter/ser/"));
+        File accounterDirectory = new File(System.getenv("AppData") + "/Accounter/");
+        File serDirectory = new File((System.getenv("AppData") + "/Accounter/ser/"));
         if (!accounterDirectory.exists()) {
             if (accounterDirectory.mkdir() && serDirectory.mkdir()) {
                 if (verbose) System.out.println("Created 'Accounter' directory successfully.");
