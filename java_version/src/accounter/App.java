@@ -15,7 +15,6 @@ import accounter.java.client.Corporation;
 import accounter.java.client.Individual;
 import accounter.java.models.AppointmentInfoLabel;
 import accounter.java.models.DayPaneBase;
-import com.sun.istack.internal.NotNull;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -29,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.file.DirectoryStream;

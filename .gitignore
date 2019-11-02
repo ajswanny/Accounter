@@ -33,3 +33,7 @@ src/META-INF
 res/ser/
 META-INF/
 old-versions
+
+java_version/src/.idea/
+java_version/src/java_version.iml
+java_version/src/out/
